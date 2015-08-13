@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="jsshow">
+        <div ng-show="currentview == 'home'">
+            <div ng-repeat="item in albums">
+                <img src="/snapd-angular/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.name }}" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)"/>
+                <p>{{ item.name }}, {{ item.date }}, {{ item.intro }}</p>
+                <p>
+                    <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)">Album</span>
+                    <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)">Thumbs</span>
+                </p>
+            </div>
+        </div>
+
+        <div ng-show="currentview == 'album'">
+            <div>
+                <span ng-show="currentpic > 0" ng-click="showPrev()">Previous</span>
+                <span ng-show="currentpic < album.size" ng-click="showNext()">Next</span>
+                <span ng-click="loadThumbs(item.thumbslinkaj)">Thumbs</span>
+                {{ currentpic }}
+                {{ album.size }}
+            </div>
+            <div ng-repeat="item in album" ng-show="currentpic == item.picid">
+                {{ item.desc }}
+                {{ item.picid }}
+                {{ item.link }}
+                <img src="{{ item.pic }}"/>
+            </div>
+        </div>
+        
+        <div ng-show="currentview == 'thumbs'">
+            <div ng-repeat="item in album">
+                <div ng-click="loadAlbum(item.albumlinkaj,item.picid)">
+                    <img src="{{ item.pic }}" width="100"/>
+                    {{ item.desc }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+
+    <div class="jshide">
+        <div id="albumlist">
+            {% block albumlist %}{% endblock albumlist %}
+        </div>
+
+        <div id="album">
+            {% block album %}
+                <div>
+                    <a data-prev="">Previous</a>
+                    <a data-next="">Next</a>
+                    <a data-viewthumbs="">View thumbs</a>
+                </div>
+
+                <div data-pic=""></div>
+                <div data-desc=""></div>
+            {% endblock album %}
+        </div>
+
+        <div id="thumbs">
+            {% block thumbs %}{% endblock thumbs %}
+        </div>
+    </div>
+{% endblock content %}

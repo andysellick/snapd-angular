@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block title %}[[ title ]] | [[ block.super ]]{% endblock title %}
+
+{% block album %}
+    TEMPLATE
+    <div>
+        {% if prev %}
+            <a href="[[ prev ]]" data-prev="">Previous</a>
+        {% endif %}
+        {% if next %}
+            <a href="[[ next ]]" data-next="">Next</a>
+        {% endif %}
+        
+        <a href="[[ thumbslink ]]">View thumbs</a>
+    </div>
+
+    {% if pic %}
+        <div data-pic="">
+            <img src="[[ pic ]]"/>
+        </div>
+    {% endif %}
+
+    {% if desc %}
+        <div data-desc="">[[ desc ]]</div>
+    {% endif %}
+{% endblock album %}

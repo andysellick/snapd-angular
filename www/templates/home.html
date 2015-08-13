@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block albumlist %}
+    TEMPLATE
+    {% for listAlbums %}
+        <div>
+            <a href="[[ albumlink ]]" data-loadalbum="[[ albumlinkaj ]]">
+                <img src="public/img/thumbs/[[ thumb ]]" alt="[[ name ]]"/>
+            </a>
+            <p>[[ name ]]</p>
+            <p>[[ date ]]</p>
+            <p>[[ intro ]]</p>
+            <p>
+                <a href="[[ albumlink ]]" data-loadalbum="[[ albumlinkaj ]]">Album</a>
+                <a href="[[ thumbslink ]]" data-loadalbum="[[ thumbslinkaj ]]">Thumbs</a>
+            </p>
+        </div>
+    {% endfor %}
+{% endblock albumlist %}
+
+{% block scripts %}
+    <script>
+        /*
+        $(document).ready(function(){
+            lenny.ajax.loadAlbumList();
+        });
+        */
+    </script>
+{% endblock scripts %}
+

@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block thumbs %}
+    TEMPLATE
+    {% for showThumbs %}
+        <div>
+            {% if pic %}
+                <a href="[[ link ]][[ picid ]]">
+                    <img src="[[ pic ]]" width="100"/>
+                </a>
+            {% endif %}
+            {% if desc %}
+                <p>[[ desc ]]</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock thumbs %}

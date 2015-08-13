@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Page not found | {{ block.super }}{% endblock title %}
+
+{% block contentwrapper %}
+    <div class="well">
+        <h2 class="title">These aren't the droids you're looking for</h2>
+        <div class="content">
+            <p>We're sorry, but the page you're looking for could not be found. Perhaps you followed an old link?</p>
+        </div>
+    </div>
+{% endblock contentwrapper %}
