@@ -219,7 +219,8 @@ class cdHandler extends xmlStuff {
 
                         $thumbs = array(
                             'desc' => (string)$pic['desc'],
-                            'pic' => $this->sitepath.'/public/img/pics/'.(string)$xml['albumdir'].'/'.(string)$pic['file'], //yeah this is a bit complex fixme
+                            //'pic' => $this->sitepath.'/public/img/pics/'.(string)$xml['albumdir'].'/'.(string)$pic['file'], //yeah this is a bit complex fixme
+                            'pic' => (string)$xml['albumdir'].'/'.(string)$pic['file'],
                             'picid' => $counter,
                             //'prev' => $prevlink,
                             //'next' => $nextlink, //fixme don't need these, surely?

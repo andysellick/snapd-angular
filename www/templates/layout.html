@@ -5,6 +5,7 @@
         <div ng-show="currentview == 'home'">
             <div ng-repeat="item in albums">
                 <img src="/snapd-angular/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.name }}" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)"/>
+                {{ item.thumb }}
                 <p>{{ item.name }}, {{ item.date }}, {{ item.intro }}</p>
                 <p>
                     <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)">Album</span>
@@ -18,21 +19,19 @@
                 <span ng-show="currentpic > 0" ng-click="showPrev()">Previous</span>
                 <span ng-show="currentpic < album.size" ng-click="showNext()">Next</span>
                 <span ng-click="loadThumbs('',url_sitepath + '/thumbs' + album.link)">Thumbs</span>
-                {{ currentpic }}
-                {{ album.size }}
+                <span>Picture {{ currentpic }} of {{ album.size }}</span>
             </div>
             <div ng-repeat="item in album" ng-show="currentpic == item.picid">
-                {{ item.desc }}
-                {{ item.picid }}
-                {{ item.link }}
-                <img src="{{ item.pic }}"/>
+                <p>{{ item.desc }}</p>
+                <p>{{ item.link }}</p>
+                <img src="/snapd-angular/public/makeImage.php?img=img/pics/{{ item.pic }}&quality=80&width=400&height=400">
             </div>
         </div>
         
         <div ng-show="currentview == 'thumbs'">
             <div ng-repeat="item in album">
-                <div ng-click="loadAlbum(item.albumlinkaj,item.link + item.picid,item.picid)">
-                    <img src="{{ item.pic }}" width="100"/>
+                <div>
+                    <img src="{{ item.pic }}" ng-click="loadAlbum(item.albumlinkaj,item.link + item.picid,item.picid)" width="100"/>
                     {{ item.desc }}
                 </div>
             </div>
