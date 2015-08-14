@@ -17,7 +17,7 @@
             <div>
                 <span ng-show="currentpic > 0" ng-click="showPrev()">Previous</span>
                 <span ng-show="currentpic < album.size" ng-click="showNext()">Next</span>
-                <span ng-click="loadThumbs(item.thumbslinkaj)">Thumbs</span>
+                <span ng-click="loadThumbs('',url_sitepath + '/thumbs' + album.link)">Thumbs</span>
                 {{ currentpic }}
                 {{ album.size }}
             </div>
@@ -31,7 +31,7 @@
         
         <div ng-show="currentview == 'thumbs'">
             <div ng-repeat="item in album">
-                <div ng-click="loadAlbum(item.albumlinkaj,item.picid)">
+                <div ng-click="loadAlbum(item.albumlinkaj,item.link + item.picid,item.picid)">
                     <img src="{{ item.pic }}" width="100"/>
                     {{ item.desc }}
                 </div>
