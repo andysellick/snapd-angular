@@ -2,7 +2,7 @@
 angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$timeout){
     $scope.albums = 0; //minimal details of all albums
     $scope.album = 0; //the album currently being viewed
-    $scope.currentview; //will either be 'home','album' or 'thumbs'
+    $scope.currentview = 'home'; //will either be 'home','album' or 'thumbs'
     $scope.currentpic = 0;
     $scope.albumpicwidth = 0;
     $scope.albumpicheight = 0;
@@ -95,8 +95,10 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     //http://stackoverflow.com/questions/824349/modify-the-url-without-reloading-the-page/3354511#3354511
     $scope.updatePageURL = function(url){
         url = $scope.url_base + url;
-        console.log('updatePageURL: ',url);
-        window.history.pushState({"view":$scope.currentview,"pageTitle":document.title,"pic":$scope.currentpic,"album":$scope.album},"",url);
+        //console.log('updatePageURL: ',url);
+        if($window.history.pushState){ //fix for older browsers
+            $window.history.pushState({"view":$scope.currentview,"pageTitle":document.title,"pic":$scope.currentpic,"album":$scope.album},"",url);
+        }
     }
 
     //called on browser back, updates relevant stuff

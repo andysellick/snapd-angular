@@ -62,6 +62,7 @@ class cdHandler extends xmlStuff {
         return(json_encode(self::listAlbums()));
     }
 
+    /*
     //display a specific thumbnail from an album
     //url structure is /album/yyyy/mm/dd/name/id - id is optional, assumes 0
     function showThumb(){
@@ -115,7 +116,9 @@ class cdHandler extends xmlStuff {
         }
         return array("desc" => "We couldn't find that picture. Perhaps go back to the homepage and try again?");
     }
+    */
 
+    /*
     //display all thumbnails from an album
     function showThumbs($ajax=0){
         $return = array();
@@ -172,7 +175,8 @@ class cdHandler extends xmlStuff {
         }
         return array("pic" => "<p>We couldn't find that picture. Perhaps go back to the homepage and try again?</p>");
     }
-    
+    */
+
     //generic function to return data for a specific picture or all pictures in an album
     function showAThumbOrTwo($ajax=0){
         $return = array();
@@ -194,7 +198,7 @@ class cdHandler extends xmlStuff {
                 $currlink = '/'.$command[1].'/'.$command[2].'/'.$command[3].'/'.$command[4].'/';
                 
                 //find out if a specific picture should be returned (no js) or return all (js via ajax)
-                $id = 0;
+                $id = -1;
                 if($ajax){
                     $id = -1;
                 }

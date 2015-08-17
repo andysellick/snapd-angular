@@ -13,6 +13,6 @@
         'home-data' => array('listAlbumsJSON'),
         'album' => array('showAThumbOrTwo'),
         'album-data' => array('showThumbsJSON'),
-        'thumbs' => array('showThumbs'),
+        'thumbs' => array('showAThumbOrTwo'),
     );
 ?>
