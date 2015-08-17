@@ -4,8 +4,7 @@
     <div class="jsshow">
         <div ng-show="currentview == 'home'">
             <div ng-repeat="item in albums">
-                <img src="/snapd-angular/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.name }}" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)"/>
-                {{ item.thumb }}
+                <img src="/snapd-angular/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.thumb }}" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)"/>
                 <p>{{ item.name }}, {{ item.date }}, {{ item.intro }}</p>
                 <p>
                     <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)">Album</span>

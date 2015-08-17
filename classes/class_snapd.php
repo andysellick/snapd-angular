@@ -5,6 +5,8 @@ class cdHandler extends xmlStuff {
     var $command;
     var $sitepath = '/snapd-angular'; //FIXME
     var $showall;
+    var $picdir = '../public/img/pics/';
+    var $thumbnaildir = '../public/img/thumbs/';
     /*
     var $path;
     var $currentpath;
@@ -42,6 +44,7 @@ class cdHandler extends xmlStuff {
             $linkname = self::flattenTitleForLink((string)$xml["name"]);
             $albumid = str_replace("/","-",$link);
             $thumb = "album-".$albumid."-".$thumb.".jpg";
+            $origpic = (string)$xml['pic'];
 
             $loopvars = array('name' => (string)$xml["name"],
                             'date' => self::parseFilenameAsDate((string)$file),
@@ -52,6 +55,9 @@ class cdHandler extends xmlStuff {
                             'albumlink' => $this->sitepath.'/album/'.$link.'/'.$linkname.'/0',
                             'albumlinkaj' => '/album-data/'.$link.'/'.$linkname.'/0'
                             );
+            //$thumb = $this->thumbnaildir.$thumb;
+            print('wat '.$origpic);
+            //self::generateThumb($thumb);
             array_push($return,$loopvars);
         }
         return $return;
@@ -60,6 +66,48 @@ class cdHandler extends xmlStuff {
     //get the homepage album list in json
     function listAlbumsJSON(){
         return(json_encode(self::listAlbums()));
+    }
+
+    //FIXME so confused, this code is
+    //need to generate a thumb, of the form album-yyyy-mm-dd.jpg from a picture, of the form <anything>
+    function generateThumb($thumb){
+        if(!file_exists($thumb)) {
+            /*
+            if (!$handle = fopen($thumbnailfile, 'a')) {
+                exit;
+            }
+            */
+			$actualdomain = $_SERVER["HTTP_HOST"];
+			//now get the path part of the URL
+			$actualurl = $_SERVER["PHP_SELF"];
+			//this will not return what we actually want, so we need to strip off the filename, ie.
+			//everything after the last slash
+			$pos = strrpos($actualurl, "/");
+			$actualurl = substr($actualurl, 0, $pos);
+
+			// Get dimensions of original image
+			list($img_width, $img_height) = getimagesize($thumbnailfile);
+
+			//work out image dimensions to use
+			$xscale = $img_width / $this->thumbwidth;
+			$yscale = $img_height / $this->thumbheight;
+			$scale = max($xscale,$yscale);
+
+			$outer_width = intval($img_width / $scale);
+			$outer_height = intval($img_height / $scale);
+
+			$outer_width = 120;
+			$outer_height = 120;
+
+			$url = "http://$actualdomain$actualurl/makeImage.php?img=$filename&quality=$this->quality&width=$outer_width&height=$outer_height&thumb=1";
+			$content = file_get_contents($url);
+
+            // Write content to our opened file.
+            if (fwrite($handle, $content) === FALSE) {
+                exit;
+            }
+			fclose($handle);
+        }
     }
 
     /*
@@ -220,21 +268,28 @@ class cdHandler extends xmlStuff {
                         if($id > 0){
                             $prevlink = $currlink.($id - 1);
                         }
+                        
+                        $thumbnailfile = (string)$xml['albumdir'].'/'.(string)$pic['file'];
 
                         $thumbs = array(
                             'desc' => (string)$pic['desc'],
                             //'pic' => $this->sitepath.'/public/img/pics/'.(string)$xml['albumdir'].'/'.(string)$pic['file'], //yeah this is a bit complex fixme
-                            'pic' => (string)$xml['albumdir'].'/'.(string)$pic['file'],
+                            'pic' => $thumbnailfile,
                             'picid' => $counter,
                             //'prev' => $prevlink,
                             //'next' => $nextlink, //fixme don't need these, surely?
                             'link' => $this->sitepath.'/album'.$currlink
                         );
+                        
+                        echo($thumbnailfile);
+                        
+
+
                         array_push($return,$thumbs);
                         $counter += 1;
                     }
-                    //for an ajax call, we need to modify the data output slightly to provide additional info. This structure isn't currently supported by the template engine,
-                    //but it's perfectly acceptable if we're just outputting it all as json that will then be processed by client side JS
+                    //for ajax, modify data output to give additional info. This isn't currently supported by the template engine,
+                    //but it's acceptable if we're just outputting it all as json that will then be processed by client side JS
                     if($ajax){
                         $return['size'] = count($return) - 1; //have to do this first before the following lines corrupt the data
                         $return['title'] = (string)$xml['name'];
