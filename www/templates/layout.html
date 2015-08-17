@@ -14,6 +14,7 @@
             </div>
         </div>
 
+
         <div ng-show="currentview == 'album'">
             <div>
                 <span ng-show="currentpic > 0" ng-click="showPrev()">Previous</span>
@@ -23,11 +24,13 @@
             </div>
             <div ng-repeat="item in album" ng-show="currentpic == item.picid">
                 <p>{{ item.desc }}</p>
-                <p>{{ item.link }}</p>
-                <img src="/snapd-angular/public/makeImage.php?img=img/pics/{{ item.pic }}&quality=80&width=400&height=400">
+                <div class="imagewrapper" ng-class="{selected: currentpic == item.picid}">
+                    <img src="/snapd-angular/public/makeImage.php?img=img/pics/{{ item.pic }}&quality=80&width={{ albumpicwidth }}&height={{ albumpicheight }}">
+                </div>
             </div>
         </div>
-        
+
+
         <div ng-show="currentview == 'thumbs'">
             <div ng-repeat="item in album">
                 <div>

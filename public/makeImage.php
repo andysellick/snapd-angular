@@ -11,8 +11,10 @@
 	$new_width = $_GET['width'];
 	$new_height = $_GET['height'];
 	$quality = $_GET['quality'];
-	$thumb = $_GET['thumb'];
-
+	$thumb = 0;
+	if(isset($_GET['thumb'])) { //thumb is an optional value
+    	$thumb = $_GET['thumb'];
+    }
 	$thumb_width = $thumb_height = max($new_width,$new_height);
 
 	//Get dimensions of original image

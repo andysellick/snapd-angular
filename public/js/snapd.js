@@ -1,9 +1,12 @@
 
-angular.module('snapd',[]).controller('snapdc',function($scope,$http){
+angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$timeout){
     $scope.albums = 0; //minimal details of all albums
     $scope.album = 0; //the album currently being viewed
     $scope.currentview; //will either be 'home','album' or 'thumbs'
     $scope.currentpic = 0;
+    $scope.albumpicwidth = 0;
+    $scope.albumpicheight = 0;
+    $scope.promise;
 
     //aspects of the url, used for ajax requests and url manipulation
     //FIXME might not need all of these eventually
@@ -33,6 +36,16 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http){
     }
     $scope.getAlbumList();
 
+    //called on page resize, checks size of page and sets dimensions for album pics accordingly
+    $scope.getAlbumPicSize = function(){
+        var page = document.getElementsByTagName('html')[0];
+        $scope.albumpicheight = page.offsetHeight - 100;
+        //var im = document.getElementsByClassName('imagewrapper selected');
+        //$scope.albumpicwidth = im.offsetWidth;
+        $scope.albumpicwidth = page.offsetWidth;
+        console.log('getAlbumPicSize ',$scope.albumpicwidth,$scope.albumpicheight);
+    }
+
     //change view, retrieve JSON of an album if necessary
     //FIXME need to check if we already have THIS album
     $scope.getAlbum = function(url,view){
@@ -50,6 +63,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http){
         else {
             $scope.currentview = view;
         }
+        $scope.getAlbumPicSize();
     }
 
     //show album
@@ -87,22 +101,26 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http){
 
     //called on browser back, updates relevant stuff
     $scope.setView = function(view,pic,album){
-        console.log('setView ',view,pic,album);
+        //console.log('setView ',view,pic,album);
         $scope.currentview = view;
         $scope.currentpic = pic;
         $scope.album = album;
-        console.log($scope.currentview);
+        //console.log($scope.currentview);
         $scope.$apply();
     }
 
+    //update size of album images if page is resized. Use timeout to give a slight delay
+    $window.onresize = function(){
+        $timeout.cancel($scope.promise);
+        $scope.promise = $timeout(function(){$scope.getAlbumPicSize();},500);
+    }
 
-});
-
-angular.element(document).ready(function(){
-    window.onpopstate = function(e){
+    //FIXME there's still a bug here to do with going from homepage to album and back again, using forward
+    //on browser back/forward update page state
+    $window.onpopstate = function(e){
         if(e.state){
             document.title = e.state.pageTitle;
-            angular.element(document.getElementById('sitecontent')).scope().setView(e.state.view,e.state.pic,e.state.album);
+            $scope.setView(e.state.view,e.state.pic,e.state.album);
         }
     };
 });
