@@ -24,7 +24,7 @@
             <div ng-repeat="item in album" ng-show="currentpic == item.picid">
                 <p>{{ item.desc }}</p>
                 <div class="imagewrapper" ng-class="{selected: currentpic == item.picid}">
-                    <img src="/snapd-angular/public/makeImage.php?img=img/pics/{{ item.pic }}&quality=80&width={{ albumpicwidth }}&height={{ albumpicheight }}">
+                    <img src="/snapd-angular/makeImage.php?img=public/img/pics/{{ item.pic }}&quality=80&width={{ albumpicwidth }}&height={{ albumpicheight }}">
                 </div>
             </div>
         </div>
@@ -33,15 +33,13 @@
         <div ng-show="currentview == 'thumbs'">
             <div ng-repeat="item in album">
                 <div>
-                    <img src="{{ item.pic }}" ng-click="loadAlbum(item.albumlinkaj,item.link + item.picid,item.picid)" width="100"/>
+                    <img src="{{ item.thumb }}" ng-click="loadAlbum(item.albumlinkaj,item.link + item.picid,item.picid)" width="100"/>
                     {{ item.desc }}
                 </div>
             </div>
         </div>
     </div>
-    
-    
-    
+
 
     <div class="jshide">
         <div id="albumlist">
@@ -49,16 +47,7 @@
         </div>
 
         <div id="album">
-            {% block album %}
-                <div>
-                    <a data-prev="">Previous</a>
-                    <a data-next="">Next</a>
-                    <a data-viewthumbs="">View thumbs</a>
-                </div>
-
-                <div data-pic=""></div>
-                <div data-desc=""></div>
-            {% endblock album %}
+            {% block album %}{% endblock album %}
         </div>
 
         <div id="thumbs">

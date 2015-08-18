@@ -5,15 +5,15 @@ class cdHandler extends xmlStuff {
     var $command;
     var $sitepath = '/snapd-angular'; //FIXME
     var $showall;
-    var $picdir = '../public/img/pics/';
-    var $thumbnaildir = '../public/img/thumbs/';
+    var $picdir = 'public/img/pics/';
+    var $thumbnaildir = 'public/img/thumbs/';
+    var $quality = 80;
+    var $thumbwidth = 150;
+    var $thumbheight = 150;
     /*
     var $path;
     var $currentpath;
     var $xmlpath;
-    var $itemsperpage;
-    var $currentpage = 1;
-    var $currenttag = '';
     */
 
     function __construct(){
@@ -43,8 +43,8 @@ class cdHandler extends xmlStuff {
             $link = self::parseFilenameAsDate((string)$file);
             $linkname = self::flattenTitleForLink((string)$xml["name"]);
             $albumid = str_replace("/","-",$link);
-            $thumb = "album-".$albumid."-".$thumb.".jpg";
-            $origpic = (string)$xml['pic'];
+            $origpic = (string)$xml['albumdir'].'/'.(string)$xml->pic[$thumb]['file'];
+            $thumb = "album-".$albumid."_".$thumb.".jpg";
 
             $loopvars = array('name' => (string)$xml["name"],
                             'date' => self::parseFilenameAsDate((string)$file),
@@ -55,14 +55,12 @@ class cdHandler extends xmlStuff {
                             'albumlink' => $this->sitepath.'/album/'.$link.'/'.$linkname.'/0',
                             'albumlinkaj' => '/album-data/'.$link.'/'.$linkname.'/0'
                             );
-            //$thumb = $this->thumbnaildir.$thumb;
-            print('wat '.$origpic);
-            //self::generateThumb($thumb);
+            self::generateThumb($thumb,$origpic);
             array_push($return,$loopvars);
         }
         return $return;
     }
-    
+
     //get the homepage album list in json
     function listAlbumsJSON(){
         return(json_encode(self::listAlbums()));
@@ -70,13 +68,22 @@ class cdHandler extends xmlStuff {
 
     //FIXME so confused, this code is
     //need to generate a thumb, of the form album-yyyy-mm-dd.jpg from a picture, of the form <anything>
-    function generateThumb($thumb){
-        if(!file_exists($thumb)) {
-            /*
+    function generateThumb($thumb,$origpic){
+        $thumbnailfile = $this->thumbnaildir.$thumb;
+        $filename = $this->picdir.$origpic;
+
+        //print($thumbnailfile.' '.$filename.'<br/>');
+
+        if(!file_exists($this->thumbnaildir)){
+            //echo getcwd() . "\n";
+            //print('making '.$this->thumbnaildir);
+            mkdir($this->thumbnaildir, 0744);
+        }
+
+        if(!file_exists($thumbnailfile)) {
             if (!$handle = fopen($thumbnailfile, 'a')) {
                 exit;
             }
-            */
 			$actualdomain = $_SERVER["HTTP_HOST"];
 			//now get the path part of the URL
 			$actualurl = $_SERVER["PHP_SELF"];
@@ -86,7 +93,7 @@ class cdHandler extends xmlStuff {
 			$actualurl = substr($actualurl, 0, $pos);
 
 			// Get dimensions of original image
-			list($img_width, $img_height) = getimagesize($thumbnailfile);
+			list($img_width, $img_height) = getimagesize($filename);
 
 			//work out image dimensions to use
 			$xscale = $img_width / $this->thumbwidth;
@@ -104,9 +111,11 @@ class cdHandler extends xmlStuff {
 
             // Write content to our opened file.
             if (fwrite($handle, $content) === FALSE) {
+                //print('error writing');
                 exit;
             }
 			fclose($handle);
+
         }
     }
 
@@ -260,6 +269,7 @@ class cdHandler extends xmlStuff {
                 if($id == -1){
                     $counter = 0;
                     foreach($xml->pic as $pic){
+                        /*
                         $prevlink = '';
                         $nextlink = '';
                         if($id < count($xml->pic)){
@@ -268,22 +278,25 @@ class cdHandler extends xmlStuff {
                         if($id > 0){
                             $prevlink = $currlink.($id - 1);
                         }
-                        
-                        $thumbnailfile = (string)$xml['albumdir'].'/'.(string)$pic['file'];
+                        */
+                        //construct the required thumbnail filename and the original picture filename
+                        //FIXME there's a bit of duplication here, we're doing something v similar in list albums
+                        $link = self::parseFilenameAsDate((string)$file);
+                        $albumid = str_replace("/","-",$link);
+                        $origpic = (string)$xml['albumdir'].'/'.(string)$xml->pic[$counter]['file'];
+                        $thumb = "album-".$albumid."_".$counter.".jpg";
 
                         $thumbs = array(
                             'desc' => (string)$pic['desc'],
-                            //'pic' => $this->sitepath.'/public/img/pics/'.(string)$xml['albumdir'].'/'.(string)$pic['file'], //yeah this is a bit complex fixme
-                            'pic' => $thumbnailfile,
+                            'thumb' => $this->sitepath.'/'.$this->thumbnaildir.$thumb,
+                            'pic' => $origpic,
                             'picid' => $counter,
                             //'prev' => $prevlink,
                             //'next' => $nextlink, //fixme don't need these, surely?
                             'link' => $this->sitepath.'/album'.$currlink
                         );
-                        
-                        echo($thumbnailfile);
-                        
-
+                        //print($thumb.' '.$origpic.'<br/>');
+                        self::generateThumb($thumb,$origpic);
 
                         array_push($return,$thumbs);
                         $counter += 1;
