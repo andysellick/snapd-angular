@@ -20,7 +20,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         here = here.replace($scope.url_fullpath,'');
         here = here.split('/');
         here.clean('');
-        console.log(here);
+        //console.log(here);
         if(here.length > 0){
             if(here[0] == 'album'){
                 var url = '/album-data/' + here[1] + '/' + here[2] + '/' + here[3] + '/' + here[4] + '/'; //FIXME
@@ -60,7 +60,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.getAlbumPicSize = function(){
         $scope.albumpicwidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
         $scope.albumpicheight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-        console.log('getAlbumPicSize ',$scope.albumpicwidth,$scope.albumpicheight);
+        //console.log('getAlbumPicSize ',$scope.albumpicwidth,$scope.albumpicheight);
     }
 
     //change view, retrieve JSON of an album if necessary
@@ -100,11 +100,13 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.showPrev = function(){
         $scope.currentpic = Math.max($scope.currentpic - 1,0);
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
+        $scope.$apply(); //needed to action keypress event for some reason
     }
     //navigate to next picture
     $scope.showNext = function(){
         $scope.currentpic = Math.min($scope.currentpic + 1,$scope.album.size);
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
+        $scope.$apply();
     }
 
     //change current url without reloading the page
@@ -140,7 +142,19 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
             document.title = e.state.pageTitle;
             $scope.setView(e.state.view,e.state.pic,e.state.album);
         }
-    };
+    }
+    
+    document.addEventListener('keydown', function(e){
+        e = e || window.event;
+        if($scope.currentview == 'album'){
+            if(e.keyCode == 39 || e.keyCode == 40){
+                $scope.showNext();
+            }
+            if(e.keyCode == 37 || e.keyCode == 38){
+                $scope.showPrev();
+            }
+        }
+    });
 
     $scope.getAlbumPicSize();
     $scope.getCurrentLocation(); //on page load, check to see where we are
