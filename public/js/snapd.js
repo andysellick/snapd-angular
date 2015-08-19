@@ -22,12 +22,10 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         here.clean('');
         //console.log(here);
         if(here.length > 0){
-            if(here[0] == 'album'){
+            if(here[0] == 'album' || here[0] == 'thumbs'){
                 var url = '/album-data/' + here[1] + '/' + here[2] + '/' + here[3] + '/' + here[4] + '/'; //FIXME
                 $scope.currentpic = parseInt(here[5]);
                 $scope.getAlbum(url,here[0]);
-            }
-            else if(here[0] == 'thumbs'){
             }
         }
         else {
