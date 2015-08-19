@@ -14,3 +14,34 @@
     main {
         
     }
+
+    .albumnav {
+        position:absolute;
+        z-index:100;
+        top:0;
+        right:0;
+        padding:0.5em 1em;
+        background:rgba(255,255,255,0.5);
+    }
+
+    .albumwrapper {
+        position:relative;
+
+        .imagewrapper {
+            img {
+                display:block;
+                margin:0 auto;
+            }
+        }
+
+        .caption {
+            position:absolute;
+            bottom:0;
+            left:0;
+            width:100%;
+            padding:1em;
+            .border-box();
+            background:rgba(0,0,0,0.5);
+            color:#FFFFFF;
+        }
+    }
