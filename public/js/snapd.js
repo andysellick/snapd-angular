@@ -1,5 +1,5 @@
 
-angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$timeout){
+angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$timeout,$compile){
     $scope.albums = 0; //minimal details of all albums
     $scope.album = 0; //the album currently being viewed
     $scope.currentview = 'home'; //will either be 'home','album' or 'thumbs'
@@ -52,6 +52,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 alert("AJAX failed!");
             });
         }
+        document.title = 'snapd';
     }
 
     //called on page resize, checks size of page and sets dimensions for album pics accordingly
@@ -128,6 +129,11 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         $scope.$apply();
     }
     
+    $scope.test = function(pic){
+        console.log('test');
+        $scope.currentpic = pic;
+    }
+
     $scope.map = 0;
     $scope.markers = [];
 
@@ -162,9 +168,11 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 });
 
                 bounds.extend(marker.position);
+                var lnk = '<span ng-click="test(' + i + ')">' + $scope.album[i]['desc'] + '<br/>View</span>';
+                var plink = $compile(lnk)($scope); //FIXME this is binding to the scope, which is why it's the same output each time
                 google.maps.event.addListener(marker, 'click', (function(marker, i) {
                     return function() {
-                      infowindow.setContent($scope.album[i]['desc']);
+                      infowindow.setContent(plink[0]);
                       infowindow.open($scope.map, marker);
                     }
                   })(marker, i));
