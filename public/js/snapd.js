@@ -70,6 +70,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 $scope.album = data;
                 $scope.currentview = view;
                 document.title = $scope.album.title + ' | snapd';
+                $scope.doMap();
             });
             rp.error(function(data, status, headers, config) {
                 alert("AJAX failed!");
@@ -80,7 +81,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         }
     }
 
-    //show album
+    //show album, called on click of album link
     $scope.loadAlbum = function(url,fakeurl,pic){
         pic = typeof pic !== 'undefined' ? pic : 0;
         $scope.updatePageURL(fakeurl);
@@ -126,6 +127,67 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         //console.log($scope.currentview);
         $scope.$apply();
     }
+    
+    $scope.map = 0;
+    $scope.markers = [];
+
+    //given an album with lat long data, generate and insert a google map for it
+    $scope.doMap = function(){
+        var bounds = new google.maps.LatLngBounds(null);
+        var infowindow = new google.maps.InfoWindow();
+
+        //only create a map if it doesn't exist already
+        if($scope.map == 0){
+            //console.log('creating map');
+            $scope.map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 20,
+            });
+        }
+        else {
+            //console.log('clearing map');
+            $scope.deleteMarkers();
+        }
+
+        for(var i = 0; i < $scope.album.size; i++){
+            var latlong = $scope.album[i]['latlong'];
+            //console.log(latlong);
+            if(latlong.length){
+                latlong = latlong.split(',');
+                latlong = {lat:parseFloat(latlong[0]), lng:parseFloat(latlong[1].trim())};
+                //console.log(latlong);
+                var marker = new google.maps.Marker({
+                    position: latlong,
+                    map: $scope.map,
+                    title: 'test'
+                });
+
+                bounds.extend(marker.position);
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                    return function() {
+                      infowindow.setContent($scope.album[i]['desc']);
+                      infowindow.open($scope.map, marker);
+                    }
+                  })(marker, i));
+                $scope.markers.push(marker); //add marker to our list
+            }
+        }
+        //$scope.map.fitBounds(bounds);
+        //fitbounds doesn't work the second time, leaves the map too zoomed out
+        //hacky but works: http://stackoverflow.com/questions/3873195/calling-map-fitbounds-multiple-times-in-google-maps-api-v3-0
+        setTimeout( function() { $scope.map.fitBounds( bounds ); }, 1 );
+    }
+
+    //remove markers from map
+    $scope.deleteMarkers = function() {
+        if($scope.markers.length){
+            for(var i = 0; i < $scope.markers.length; i++) {
+                $scope.markers[i].setMap(null);
+            }
+        }
+        $scope.markers = [];
+        $scope.map.setZoom(20);
+    }
+
 
     //update size of album images if page is resized. Use timeout to give a slight delay
     $window.onresize = function(){

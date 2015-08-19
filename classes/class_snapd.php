@@ -293,7 +293,8 @@ class cdHandler extends xmlStuff {
                             'picid' => $counter,
                             //'prev' => $prevlink,
                             //'next' => $nextlink, //fixme don't need these, surely?
-                            'link' => $this->sitepath.'/album'.$currlink
+                            'link' => $this->sitepath.'/album'.$currlink,
+                            'latlong' => (string)$pic['latlong']
                         );
                         //print($thumb.' '.$origpic.'<br/>');
                         self::generateThumb($thumb,$origpic);
