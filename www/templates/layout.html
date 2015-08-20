@@ -7,8 +7,8 @@
                 <img src="/snapd-angular/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.thumb }}" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)"/>
                 <p>{{ item.name }}, {{ item.date }}, {{ item.intro }}</p>
                 <p>
-                    <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)">Album</span>
-                    <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)">Thumbs</span>
+                    <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="faux_link">Album</span>
+                    <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)" class="faux_link">Thumbs</span>
                 </p>
             </div>
         </div>
@@ -16,9 +16,9 @@
 
         <div ng-show="currentview == 'album'">
             <nav class="albumnav">
-                <span ng-show="currentpic > 0" ng-click="showPrev()">Previous</span>
-                <span ng-show="currentpic < album.size" ng-click="showNext()">Next</span>
-                <span ng-click="loadThumbs('',url_sitepath + '/thumbs' + album.link)">Thumbs</span>
+                <span ng-show="currentpic > 0" ng-click="showPrev()" class="faux_link">Previous</span>
+                <span ng-show="currentpic < album.size" ng-click="showNext()" class="faux_link">Next</span>
+                <span ng-click="loadThumbs('',url_sitepath + '/thumbs' + album.link)" class="faux_link">Thumbs</span>
                 <span>Picture {{ currentpic }} of {{ album.size }}</span>
                 <div id="map" class="map"></div>
             </nav>

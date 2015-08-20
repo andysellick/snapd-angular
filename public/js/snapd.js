@@ -97,16 +97,20 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     }
 
     //navigate to previous picture
-    $scope.showPrev = function(){
+    $scope.showPrev = function(apply){
         $scope.currentpic = Math.max($scope.currentpic - 1,0);
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
-        $scope.$apply(); //needed to action keypress event for some reason
+        if(apply){
+            $scope.$apply(); //needed to action keypress event for some reason, but causes problem on ng-click
+        }
     }
     //navigate to next picture
-    $scope.showNext = function(){
+    $scope.showNext = function(apply){
         $scope.currentpic = Math.min($scope.currentpic + 1,$scope.album.size);
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
-        $scope.$apply();
+        if(apply){
+            $scope.$apply();
+        }
     }
 
     //change current url without reloading the page
@@ -130,12 +134,12 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     }
     
     $scope.test = function(pic){
-        console.log('test');
         $scope.currentpic = pic;
     }
 
     $scope.map = 0;
     $scope.markers = [];
+    $scope.infolinks = [];
 
     //given an album with lat long data, generate and insert a google map for it
     $scope.doMap = function(){
@@ -154,6 +158,8 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
             $scope.deleteMarkers();
         }
 
+        $scope.infolinks = [];
+
         for(var i = 0; i < $scope.album.size; i++){
             var latlong = $scope.album[i]['latlong'];
             //console.log(latlong);
@@ -163,26 +169,27 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 //console.log(latlong);
                 var marker = new google.maps.Marker({
                     position: latlong,
-                    map: $scope.map,
-                    title: 'test'
+                    map: $scope.map
                 });
 
                 bounds.extend(marker.position);
-                var lnk = '<span ng-click="test(' + i + ')">' + $scope.album[i]['desc'] + '<br/>View</span>';
-                var plink = $compile(lnk)($scope); //FIXME this is binding to the scope, which is why it's the same output each time
+                //links to go into the infowindows
+                //in order for the ng-click to work, we need to $compile them against the scope
+                //however, doing so repeats itself, which is why each has to be done as a separate entity
+                var lnk = '<span ng-click="test(' + i + ')">' + $scope.album[i]['desc'] + '<br/><span class="faux_link">View</span></span>';
+                $scope.infolinks[i] = $compile(lnk)($scope);
                 google.maps.event.addListener(marker, 'click', (function(marker, i) {
                     return function() {
-                      infowindow.setContent(plink[0]);
+                      infowindow.setContent($scope.infolinks[i][0]);
                       infowindow.open($scope.map, marker);
                     }
                   })(marker, i));
                 $scope.markers.push(marker); //add marker to our list
             }
         }
-        //$scope.map.fitBounds(bounds);
         //fitbounds doesn't work the second time, leaves the map too zoomed out
         //hacky but works: http://stackoverflow.com/questions/3873195/calling-map-fitbounds-multiple-times-in-google-maps-api-v3-0
-        setTimeout( function() { $scope.map.fitBounds( bounds ); }, 1 );
+        setTimeout(function() {$scope.map.fitBounds(bounds);},1);
     }
 
     //remove markers from map
@@ -212,14 +219,15 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         }
     }
     
+    //handle key presses for next/prev navigation with cursor keys
     document.addEventListener('keydown', function(e){
         e = e || window.event;
         if($scope.currentview == 'album'){
             if(e.keyCode == 39 || e.keyCode == 40){
-                $scope.showNext();
+                $scope.showNext(1);
             }
             if(e.keyCode == 37 || e.keyCode == 38){
-                $scope.showPrev();
+                $scope.showPrev(1);
             }
         }
     });
