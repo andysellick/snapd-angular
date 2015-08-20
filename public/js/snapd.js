@@ -156,8 +156,6 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
 
     //given an album with lat long data, generate and insert a google map for it
     $scope.doMap = function(){
-        var bounds = new google.maps.LatLngBounds(null);
-        var infowindow = new google.maps.InfoWindow();
 
         //only create a map if it doesn't exist already
         if($scope.map == 0){
@@ -172,6 +170,8 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         }
 
         $scope.infolinks = [];
+        var bounds = new google.maps.LatLngBounds(null);
+        var infowindow = new google.maps.InfoWindow();
 
         for(var i = 0; i < $scope.album.size; i++){
             var latlong = $scope.album[i]['latlong'];

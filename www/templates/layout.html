@@ -19,13 +19,13 @@
                 <span ng-show="currentpic > 0" ng-click="showPrev()" class="faux_link">Previous</span>
                 <span ng-show="currentpic < album.size" ng-click="showNext()" class="faux_link">Next</span>
                 <span ng-click="loadThumbs('',url_sitepath + '/thumbs' + album.link)" class="faux_link">Thumbs</span>
-                <span>Picture {{ currentpic }} of {{ album.size }}</span>
-                <div id="map" class="map"></div>
+                <span>Picture {{ currentpic + 1 }} of {{ album.size + 1 }}</span>
+                <div id="map" class="map" ng-show="markers.length > 0"></div>
             </nav>
             <div ng-repeat="item in album" ng-show="currentpic == item.picid">
                 <div class="albumwrapper">
                     <div class="imagewrapper clearfix" ng-class="{selected: currentpic == item.picid}"> {% comment %}selected needed?{% endcomment %}
-                        <img src="/snapd-angular/makeImage.php?img=public/img/pics/{{ item.pic }}&quality=80&width={{ albumpicwidth }}&height={{ albumpicheight }}" class="image{{ item.picid }}"/>
+                        <img src="/snapd-angular/makeImage.php?img=public/img/pics/{{ item.pic }}&quality=80&width={{ albumpicwidth }}&height={{ albumpicheight }}" alt=""/>
                     </div>
                     <div class="caption">{{ item.desc }}</div>
                 </div>
