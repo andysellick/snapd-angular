@@ -24,8 +24,8 @@
             </nav>
             <div ng-repeat="item in album" ng-show="currentpic == item.picid">
                 <div class="albumwrapper">
-                    <div class="imagewrapper" ng-class="{selected: currentpic == item.picid}">
-                        <img src="/snapd-angular/makeImage.php?img=public/img/pics/{{ item.pic }}&quality=80&width={{ albumpicwidth }}&height={{ albumpicheight }}">
+                    <div class="imagewrapper clearfix" ng-class="{selected: currentpic == item.picid}"> {% comment %}selected needed?{% endcomment %}
+                        <img src="/snapd-angular/makeImage.php?img=public/img/pics/{{ item.pic }}&quality=80&width={{ albumpicwidth }}&height={{ albumpicheight }}" class="image{{ item.picid }}"/>
                     </div>
                     <div class="caption">{{ item.desc }}</div>
                 </div>

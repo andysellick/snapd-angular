@@ -56,6 +56,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     }
 
     //called on page resize, checks size of page and sets dimensions for album pics accordingly
+    //backend takes these two values and does the work to return an image that fits in the space - may be taller or narrower
     $scope.getAlbumPicSize = function(){
         $scope.albumpicwidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
         $scope.albumpicheight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
@@ -113,6 +114,17 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         }
     }
 
+    //be clever and apply a top/bottom margin to each image to centre it in the page and ensure the caption is always at the bottom
+    //this works on next/prev because images are already loaded but not on initial album load
+    //...sooooo... yeah. I've done it in CSS instead. Works fine. Leaving this here for the moment for reference
+    $scope.adjustImagePos = function(){
+        var cheight = document.getElementsByClassName('image' + $scope.currentpic);
+        var currimg = cheight[0];
+        cheight = ($scope.albumpicheight - currimg.height) / 2;
+        console.log(cheight);
+        currimg.setAttribute('style','margin-top:' + cheight + "px;" + 'margin-bottom:' + cheight + "px");
+    }
+
     //change current url without reloading the page
     //http://stackoverflow.com/questions/824349/modify-the-url-without-reloading-the-page/3354511#3354511
     $scope.updatePageURL = function(url){
@@ -132,8 +144,9 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         //console.log($scope.currentview);
         $scope.$apply();
     }
-    
-    $scope.test = function(pic){
+
+    //click in an infowindow, change to picture chosen
+    $scope.switchPic = function(pic){
         $scope.currentpic = pic;
     }
 
@@ -176,7 +189,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 //links to go into the infowindows
                 //in order for the ng-click to work, we need to $compile them against the scope
                 //however, doing so repeats itself, which is why each has to be done as a separate entity
-                var lnk = '<span ng-click="test(' + i + ')">' + $scope.album[i]['desc'] + '<br/><span class="faux_link">View</span></span>';
+                var lnk = '<span ng-click="switchPic(' + i + ')">' + $scope.album[i]['desc'] + '<br/><span class="faux_link">View</span></span>';
                 $scope.infolinks[i] = $compile(lnk)($scope);
                 google.maps.event.addListener(marker, 'click', (function(marker, i) {
                     return function() {
