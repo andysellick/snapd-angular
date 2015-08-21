@@ -23,13 +23,23 @@
         padding:0.5em 1em;
         background:rgba(255,255,255,0.5);
         
-        .map {
+        .mapwrapper {
             position:absolute;
             top:100%;
             right:0;
-            width:300px;
-            height:300px;
-            border:solid 1px #000000;
+            
+            .map-toggle {
+                position:absolute;
+                top:0;
+                right:100%;
+                cursor:pointer;
+            }
+
+            .map {
+                width:300px;
+                height:300px;
+                border:solid 1px #000000;
+            }
         }
     }
 
@@ -44,6 +54,7 @@
         .imagewrapper {
             display:table-cell;
             vertical-align:middle;
+            //.vertical-gradient( #ffffff, 0%, rgba(0,0,0,0.5), 100% );
             img {
                 display:block;
                 margin:0 auto;

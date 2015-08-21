@@ -41,6 +41,9 @@
         /* we want to remove the nojs class as soon as possible on page load */
         document.getElementById("site").className = document.getElementById("site").className.replace(/nojs/i,'');
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="/snapd-angular/public/js/angular.min.js"></script>
+    <script src="/snapd-angular/public/js/snapd.js"></script>
 </head>
 
 <body>
@@ -58,10 +61,7 @@
         </footer>
     {% endblock footer %}
 </div>
-    
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="/snapd-angular/public/js/angular.min.js"></script>
-    <script src="/snapd-angular/public/js/snapd.js"></script>
+
 {% block scripts %}{% endblock scripts %}
 {% block extrascripts %}{% endblock extrascripts %}
 

@@ -20,7 +20,10 @@
                 <span ng-show="currentpic < album.size" ng-click="showNext()" class="faux_link">Next</span>
                 <span ng-click="loadThumbs('',url_sitepath + '/thumbs' + album.link)" class="faux_link">Thumbs</span>
                 <span>Picture {{ currentpic + 1 }} of {{ album.size + 1 }}</span>
-                <div id="map" class="map" ng-show="markers.length > 0"></div>
+                <div class="mapwrapper">
+                    <div class="map-toggle">+</div>
+                    <div id="map" class="map" ng-show="markers.length > 0"></div>
+                </div>
             </nav>
             <div ng-repeat="item in album" ng-show="currentpic == item.picid">
                 <div class="albumwrapper">
