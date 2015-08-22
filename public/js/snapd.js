@@ -65,6 +65,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
 
     //change view, retrieve JSON of an album if necessary
     //FIXME need to check if we already have THIS album
+    //FIXME bug with map, if map is hidden on album load, does not initialise properly (see new toggleMap function)
     $scope.getAlbum = function(url,view){
         if(!$scope.album){
             var rp = $http.get($scope.url_fullpath + url);
@@ -214,6 +215,11 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         }
         $scope.markers = [];
         $scope.map.setZoom(20);
+    }
+    
+    //show/hide map on click of element, triggered action mostly handled by CSS
+    $scope.toggleMap = function(el){
+        angular.element(el.currentTarget).toggleClass('hide');
     }
 
 
