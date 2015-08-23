@@ -21,7 +21,7 @@
                 <span ng-click="loadThumbs('',url_sitepath + '/thumbs' + album.link)" class="faux_link">Thumbs</span>
                 <span>Picture {{ currentpic + 1 }} of {{ album.size + 1 }}</span>
                 <div class="mapwrapper">
-                    <div class="map-toggle" ng-click="toggleMap($event)">+</div>
+                    <div class="map-toggle mapstate{{ mapstate }}" ng-click="toggleMap($event)">+</div>
                     <div id="map" class="map" ng-show="markers.length > 0"></div>
                 </div>
             </nav>

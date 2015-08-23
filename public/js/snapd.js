@@ -35,10 +35,11 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
 
     //retrieve JSON list of all albums via ajax (on homepage load)
     $scope.getAlbumList = function(event){
+        document.title = 'snapd';
+        $scope.album = 0;
         if($scope.albums.length){
             $scope.currentview = 'home';
             $scope.currentpic = 0;
-            $scope.album = 0;
             $scope.updatePageURL($scope.url_sitepath);
         }
         else {
@@ -52,7 +53,6 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 alert("AJAX failed!");
             });
         }
-        document.title = 'snapd';
     }
 
     //called on page resize, checks size of page and sets dimensions for album pics accordingly
@@ -65,7 +65,6 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
 
     //change view, retrieve JSON of an album if necessary
     //FIXME need to check if we already have THIS album
-    //FIXME bug with map, if map is hidden on album load, does not initialise properly (see new toggleMap function)
     $scope.getAlbum = function(url,view){
         if(!$scope.album){
             var rp = $http.get($scope.url_fullpath + url);
@@ -73,6 +72,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 $scope.album = data;
                 $scope.currentview = view;
                 document.title = $scope.album.title + ' | snapd';
+                $scope.mapstate = 1;
                 $scope.doMap();
             });
             rp.error(function(data, status, headers, config) {
@@ -122,7 +122,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         var cheight = document.getElementsByClassName('image' + $scope.currentpic);
         var currimg = cheight[0];
         cheight = ($scope.albumpicheight - currimg.height) / 2;
-        console.log(cheight);
+        //console.log(cheight);
         currimg.setAttribute('style','margin-top:' + cheight + "px;" + 'margin-bottom:' + cheight + "px");
     }
 
@@ -217,9 +217,18 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         $scope.map.setZoom(20);
     }
     
+    $scope.mapstate = 1; //FIXME should move all these variables up to the top at some point
+    
     //show/hide map on click of element, triggered action mostly handled by CSS
     $scope.toggleMap = function(el){
-        angular.element(el.currentTarget).toggleClass('hide');
+        var states = [0,1,2];
+        if($scope.mapstate == 0){
+            $scope.mapstate = 1;
+        }
+        else {
+            $scope.mapstate = 0;
+        }
+        //angular.element(el.currentTarget).toggleClass('hide');
     }
 
 
