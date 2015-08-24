@@ -10,21 +10,12 @@
     <meta name="Description" content="{% block metadesc %}{% endblock metadesc %}">
 
     {% block css %}
+    <link rel="stylesheet" type="text/css" href="/snapd-angular/public/css/fonts/icons/style.css"/>
     <link rel="stylesheet" type="text/css" href="/snapd-angular/public/css/styles.css"/>
     <link rel="stylesheet" media="screen and (min-width:0) and (max-width:767px)" href="/snapd-angular/public/css/styles-responsive.css"/>
     <!--[if lt IE 8 ]>
         <link rel="stylesheet" type="text/css" href="/public/css/styles-responsive.css"/>
     <![endif]-->
-    
-        <style>
-            .shown { display: block; }
-            .hidden { display: none; }
-
-            .jshide { display: none; } /* apply to elements that should only be shown if JS is disabled */
-            .nojs .jshide { display: block; }
-            .jsshow { display: block; } /* apply to elements that should only be shown if JS is active */
-            .nojs .jsshow { display: none; }
-        </style>
     {% endblock css %}
 
     {% block extracss %}{% endblock extracss %}
