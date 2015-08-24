@@ -155,6 +155,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.markers = [];
     $scope.infolinks = [];
 
+    //FIXME still a bug going from thumbs to album, map not initing correctly
     //given an album with lat long data, generate and insert a google map for it
     $scope.doMap = function(){
 

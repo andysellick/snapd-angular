@@ -11,9 +11,15 @@
         color:#333333;
     }
 
-    main {
-        
-    }
+    /* fixme move to utility or somewhere */
+    .shown { display: block; }
+    .hidden { display: none; }
+
+    .jshide { display: none; } /* apply to elements that should only be shown if JS is disabled */
+    .nojs .jshide { display: block; }
+    .jsshow { display: block; } /* apply to elements that should only be shown if JS is active */
+    .nojs .jsshow { display: none; }
+
 
     .albumnav {
         position:absolute;

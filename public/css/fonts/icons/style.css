@@ -1,0 +1,52 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/icomoon.eot?-sijghc');
+	src:url('fonts/icomoon.eot?#iefix-sijghc') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?-sijghc') format('truetype'),
+		url('fonts/icomoon.woff?-sijghc') format('woff'),
+		url('fonts/icomoon.svg?-sijghc#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-th-large:before {
+	content: "\f009";
+}
+.icon-search-plus:before {
+	content: "\f00e";
+}
+.icon-search-minus:before {
+	content: "\f010";
+}
+.icon-camera:before {
+	content: "\f030";
+}
+.icon-chevron-left:before {
+	content: "\f053";
+}
+.icon-chevron-right:before {
+	content: "\f054";
+}
+.icon-chevron-up:before {
+	content: "\f077";
+}
+.icon-chevron-down:before {
+	content: "\f078";
+}
+.icon-circle-o-notch:before {
+	content: "\f1ce";
+}
