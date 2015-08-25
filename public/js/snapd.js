@@ -98,6 +98,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         $scope.getAlbum(url,'thumbs');
     }
 
+    //FIXME make the marker change when the photo is selected
     //navigate to previous picture
     $scope.showPrev = function(apply){
         $scope.currentpic = Math.max($scope.currentpic - 1,0);

@@ -20,42 +20,45 @@
     .jsshow { display: block; } /* apply to elements that should only be shown if JS is active */
     .nojs .jsshow { display: none; }
 
+    .mapwrapper {
+        position:absolute;
+        top:0;
+        right:0;
+        z-index:100;
+
+        .map-toggle {
+            position:absolute;
+            top:0;
+            right:100%;
+            cursor:pointer;
+
+            &.mapstate0 + .map {
+                width:0;
+                border:0;
+            }
+            &.mapstate1 + .map {
+                width:300px;
+                height:300px;
+            }
+            &.mapstate2 + .map {
+            }
+        }
+        .map {
+            border:solid 1px #000;
+            border-top:0;
+            border-right:0;
+            .transition( all 0.5s );
+        }
+    }
 
     .albumnav {
         position:absolute;
-        z-index:100;
-        top:0;
+        z-index:99;
+        bottom:0;
         right:0;
         padding:0.5em 1em;
-        background:rgba(255,255,255,0.5);
-
-        .mapwrapper {
-            position:absolute;
-            top:100%;
-            right:0;
-            
-            .map-toggle {
-                position:absolute;
-                top:0;
-                right:100%;
-                cursor:pointer;
-                &.mapstate0 + .map {
-                    width:0;
-                    border:0;
-                }
-                &.mapstate1 + .map {
-                    width:300px;
-                    height:300px;
-                }
-                &.mapstate2 + .map {
-                }
-            }
-
-            .map {
-                border:solid 1px #000000;
-                .transition( all 0.5s );
-            }
-        }
+        background:rgba(0,0,0,0.5);
+        color:#FFFFFF;
     }
 
     .albumwrapper {

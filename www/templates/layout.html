@@ -15,15 +15,15 @@
 
 
         <div ng-show="currentview == 'album'">
+            <div class="mapwrapper">
+                <div class="map-toggle mapstate{{ mapstate }}" ng-click="toggleMap($event)">+</div>
+                <div id="map" class="map" ng-show="markers.length > 0"></div>
+            </div>
             <nav class="albumnav">
                 <span ng-show="currentpic > 0" ng-click="showPrev()" class="faux_link"><i class="icon-chevron-left"></i> Previous</span>
                 <span ng-show="currentpic < album.size" ng-click="showNext()" class="faux_link">Next <i class="icon-chevron-right"></i></span>
                 <span ng-click="loadThumbs('',url_sitepath + '/thumbs' + album.link)" class="faux_link">Thumbs <i class="icon-th-large"></i></span>
                 <span>Picture {{ currentpic + 1 }} of {{ album.size + 1 }}</span>
-                <div class="mapwrapper">
-                    <div class="map-toggle mapstate{{ mapstate }}" ng-click="toggleMap($event)">+</div>
-                    <div id="map" class="map" ng-show="markers.length > 0"></div>
-                </div>
             </nav>
             <div ng-repeat="item in album" ng-show="currentpic == item.picid">
                 <div class="albumwrapper">
