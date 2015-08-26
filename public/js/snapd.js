@@ -103,6 +103,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.showPrev = function(apply){
         $scope.currentpic = Math.max($scope.currentpic - 1,0);
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
+        $scope.highlightMarker();
         if(apply){
             $scope.$apply(); //needed to action keypress event for some reason, but causes problem on ng-click
         }
@@ -111,20 +112,28 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.showNext = function(apply){
         $scope.currentpic = Math.min($scope.currentpic + 1,$scope.album.size);
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
+        $scope.highlightMarker();
         if(apply){
             $scope.$apply();
         }
     }
 
-    //be clever and apply a top/bottom margin to each image to centre it in the page and ensure the caption is always at the bottom
-    //this works on next/prev because images are already loaded but not on initial album load
-    //...sooooo... yeah. I've done it in CSS instead. Works fine. Leaving this here for the moment for reference
-    $scope.adjustImagePos = function(){
-        var cheight = document.getElementsByClassName('image' + $scope.currentpic);
-        var currimg = cheight[0];
-        cheight = ($scope.albumpicheight - currimg.height) / 2;
-        //console.log(cheight);
-        currimg.setAttribute('style','margin-top:' + cheight + "px;" + 'margin-bottom:' + cheight + "px");
+    //triggered when we navigate to a new photo, highlight the current photo on the map
+    $scope.highlightMarker = function(){
+        var curr = $scope.currentpic;
+        //console.log('change marker ', $scope.currentpic, curr);
+        if(curr < $scope.album.size - 1){
+            for(var i = 0; i < $scope.markers.length; i++){ //not all photos may have a marker, so check first
+                if($scope.markers[i]){
+                    $scope.markers[i].setIcon($scope.url_fullpath + '/public/img/' + 'marker.png'); //FIXME reuse this variable
+                    $scope.markers[i].setZIndex(i);
+                }
+            }
+            if($scope.markers[curr]){
+                $scope.markers[curr].setIcon($scope.url_fullpath + '/public/img/' + 'marker_current.png'); //FIXME reuse this variable
+                $scope.markers[curr].setZIndex(100);
+            }
+        }
     }
 
     //change current url without reloading the page
@@ -175,6 +184,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         $scope.infolinks = [];
         var bounds = new google.maps.LatLngBounds(null);
         var infowindow = new google.maps.InfoWindow();
+        var iconpath = $scope.url_fullpath + '/public/img/';
 
         for(var i = 0; i < $scope.album.size; i++){
             var latlong = $scope.album[i]['latlong'];
@@ -185,7 +195,9 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 //console.log(latlong);
                 var marker = new google.maps.Marker({
                     position: latlong,
-                    map: $scope.map
+                    map: $scope.map,
+                    zIndex: i,
+                    icon: iconpath + 'marker.png'
                 });
 
                 bounds.extend(marker.position);
@@ -200,7 +212,8 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                       infowindow.open($scope.map, marker);
                     }
                   })(marker, i));
-                $scope.markers.push(marker); //add marker to our list
+                //$scope.markers.push(marker); //add marker to our list
+                $scope.markers[i] = marker;
             }
         }
         //fitbounds doesn't work the second time, leaves the map too zoomed out
@@ -261,6 +274,18 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
             }
         }
     });
+
+    //be clever and apply a top/bottom margin to each image to centre it in the page and ensure the caption is always at the bottom
+    //this works on next/prev because images are already loaded but not on initial album load
+    //...sooooo... yeah. I've done it in CSS instead. Works fine. Leaving this here for the moment for reference
+    $scope.adjustImagePos = function(){
+        var cheight = document.getElementsByClassName('image' + $scope.currentpic);
+        var currimg = cheight[0];
+        cheight = ($scope.albumpicheight - currimg.height) / 2;
+        //console.log(cheight);
+        currimg.setAttribute('style','margin-top:' + cheight + "px;" + 'margin-bottom:' + cheight + "px");
+    }
+
 
     $scope.getAlbumPicSize();
     $scope.getCurrentLocation(); //on page load, check to see where we are
