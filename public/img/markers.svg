@@ -20,6 +20,18 @@
   <defs
      id="defs4">
     <linearGradient
+       id="linearGradient4323"
+       inkscape:collect="always">
+      <stop
+         id="stop4325"
+         offset="0"
+         style="stop-color:#ffc582;stop-opacity:1" />
+      <stop
+         id="stop4327"
+         offset="1"
+         style="stop-color:#ab8741;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
        inkscape:collect="always"
        id="linearGradient4201">
       <stop
@@ -53,6 +65,16 @@
        inkscape:collect="always"
        xlink:href="#linearGradient4201"
        id="linearGradient4207-0"
+       x1="127.59688"
+       y1="286.02936"
+       x2="127.59688"
+       y2="452.7045"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       gradientTransform="translate(461.63989,-20.301985)"
+       inkscape:collect="always"
+       xlink:href="#linearGradient4323"
+       id="linearGradient4207-0-4"
        x1="127.59688"
        y1="286.02936"
        x2="127.59688"
@@ -127,6 +149,13 @@
        style="fill:url(#linearGradient4207-0);fill-opacity:1;stroke:#133262;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        d="M 248.49753,94.264427 A 156.30695,170.95454 0 0 0 92.190892,265.21951 156.30695,170.95454 0 0 0 113.21433,350.42849 l -0.16407,0.28906 135.44727,238.91993 135.44726,-238.91993 -0.13085,-0.22656 A 156.30695,170.95454 0 0 0 404.80417,265.21951 156.30695,170.95454 0 0 0 248.49753,94.264427 Z m 0,120.931643 a 48.219734,48.219734 0 0 1 48.2207,48.21875 48.219734,48.219734 0 0 1 -48.2207,48.2207 48.219734,48.219734 0 0 1 -48.2207,-48.2207 48.219734,48.219734 0 0 1 48.2207,-48.21875 z"
        id="rect4158-2-4"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="4.9362273"
+       inkscape:export-ydpi="4.9362273" />
+    <path
+       style="fill:url(#linearGradient4207-0-4);fill-opacity:1;stroke:#133262;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 589.92908,84.162475 a 156.30695,170.95454 0 0 0 -156.30663,170.955085 156.30695,170.95454 0 0 0 21.02343,85.20898 l -0.16407,0.28906 135.44727,238.91993 135.44726,-238.91993 -0.13085,-0.22656 A 156.30695,170.95454 0 0 0 746.23572,255.11756 156.30695,170.95454 0 0 0 589.92908,84.162475 Z m 0,120.931645 a 48.219734,48.219734 0 0 1 48.2207,48.21875 48.219734,48.219734 0 0 1 -48.2207,48.2207 48.219734,48.219734 0 0 1 -48.2207,-48.2207 48.219734,48.219734 0 0 1 48.2207,-48.21875 z"
+       id="rect4158-2-4-0"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="4.9362273"
        inkscape:export-ydpi="4.9362273" />

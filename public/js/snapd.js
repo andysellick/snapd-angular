@@ -123,12 +123,15 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         var curr = $scope.currentpic;
         //console.log('change marker ', $scope.currentpic, curr);
         if(curr < $scope.album.size - 1){
+            var bounds = new google.maps.LatLngBounds(null);
             for(var i = 0; i < $scope.markers.length; i++){ //not all photos may have a marker, so check first
                 if($scope.markers[i]){
                     $scope.markers[i].setIcon($scope.url_fullpath + '/public/img/' + 'marker.png'); //FIXME reuse this variable
                     $scope.markers[i].setZIndex(i);
+                    bounds.extend($scope.markers[i].position);
                 }
             }
+            setTimeout(function() {$scope.map.fitBounds(bounds);},1);
             if($scope.markers[curr]){
                 $scope.markers[curr].setIcon($scope.url_fullpath + '/public/img/' + 'marker_current.png'); //FIXME reuse this variable
                 $scope.markers[curr].setZIndex(100);
@@ -193,11 +196,17 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 latlong = latlong.split(',');
                 latlong = {lat:parseFloat(latlong[0]), lng:parseFloat(latlong[1].trim())};
                 //console.log(latlong);
+                var markerimg = 'marker.png';
+                var zindex = i;
+                if(i == $scope.currentpic){
+                    markerimg = 'marker_current.png';
+                    zindex = 100;
+                }
                 var marker = new google.maps.Marker({
                     position: latlong,
                     map: $scope.map,
-                    zIndex: i,
-                    icon: iconpath + 'marker.png'
+                    zIndex: zindex,
+                    icon: iconpath + markerimg
                 });
 
                 bounds.extend(marker.position);
@@ -216,6 +225,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 $scope.markers[i] = marker;
             }
         }
+        google.maps.event.addListener($scope.map, "click", function() {infowindow.close();});
         //fitbounds doesn't work the second time, leaves the map too zoomed out
         //hacky but works: http://stackoverflow.com/questions/3873195/calling-map-fitbounds-multiple-times-in-google-maps-api-v3-0
         setTimeout(function() {$scope.map.fitBounds(bounds);},1);
@@ -225,7 +235,9 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.deleteMarkers = function() {
         if($scope.markers.length){
             for(var i = 0; i < $scope.markers.length; i++) {
-                $scope.markers[i].setMap(null);
+                if($scope.markers[i]){
+                    $scope.markers[i].setMap(null);
+                }
             }
         }
         $scope.markers = [];
