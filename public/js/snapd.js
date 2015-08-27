@@ -13,6 +13,13 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.url_base = window.location['protocol'] + '//' + window.location['host'];
     $scope.url_sitepath = '/snapd-angular'; //FIXME
     $scope.url_fullpath = $scope.url_base + $scope.url_sitepath;
+    $scope.url_mediapath = $scope.url_fullpath + '/public/img/';
+
+    //map variables
+    $scope.map = 0;
+    $scope.markers = [];
+    $scope.infolinks = [];
+    $scope.mapstate = 1;
 
     //on page load figure out what the current url is and therefore what to show
     $scope.getCurrentLocation = function(){
@@ -64,7 +71,6 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     }
 
     //change view, retrieve JSON of an album if necessary
-    //FIXME need to check if we already have THIS album
     $scope.getAlbum = function(url,view){
         if(!$scope.album){
             var rp = $http.get($scope.url_fullpath + url);
@@ -98,7 +104,6 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         $scope.getAlbum(url,'thumbs');
     }
 
-    //FIXME make the marker change when the photo is selected
     //navigate to previous picture
     $scope.showPrev = function(apply){
         $scope.currentpic = Math.max($scope.currentpic - 1,0);
@@ -126,14 +131,14 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
             var bounds = new google.maps.LatLngBounds(null);
             for(var i = 0; i < $scope.markers.length; i++){ //not all photos may have a marker, so check first
                 if($scope.markers[i]){
-                    $scope.markers[i].setIcon($scope.url_fullpath + '/public/img/' + 'marker.png'); //FIXME reuse this variable
+                    $scope.markers[i].setIcon($scope.url_mediapath + 'marker.png');
                     $scope.markers[i].setZIndex(i);
                     bounds.extend($scope.markers[i].position);
                 }
             }
             setTimeout(function() {$scope.map.fitBounds(bounds);},1);
             if($scope.markers[curr]){
-                $scope.markers[curr].setIcon($scope.url_fullpath + '/public/img/' + 'marker_current.png'); //FIXME reuse this variable
+                $scope.markers[curr].setIcon($scope.url_mediapath + 'marker_current.png');
                 $scope.markers[curr].setZIndex(100);
             }
         }
@@ -164,10 +169,6 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         $scope.currentpic = pic;
     }
 
-    $scope.map = 0;
-    $scope.markers = [];
-    $scope.infolinks = [];
-
     //FIXME still a bug going from thumbs to album, map not initing correctly
     //given an album with lat long data, generate and insert a google map for it
     $scope.doMap = function(){
@@ -187,7 +188,6 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         $scope.infolinks = [];
         var bounds = new google.maps.LatLngBounds(null);
         var infowindow = new google.maps.InfoWindow();
-        var iconpath = $scope.url_fullpath + '/public/img/';
 
         for(var i = 0; i < $scope.album.size; i++){
             var latlong = $scope.album[i]['latlong'];
@@ -206,7 +206,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                     position: latlong,
                     map: $scope.map,
                     zIndex: zindex,
-                    icon: iconpath + markerimg
+                    icon: $scope.url_mediapath + markerimg
                 });
 
                 bounds.extend(marker.position);
@@ -244,20 +244,17 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         $scope.map.setZoom(20);
     }
     
-    $scope.mapstate = 1; //FIXME should move all these variables up to the top at some point
-    
+
     //show/hide map on click of element, triggered action mostly handled by CSS
-    $scope.toggleMap = function(el){
-        var states = [0,1,2];
+    $scope.toggleMap = function(){
+        var states = [0,1,2]; //FIXME this isn't used yet, need a 'full' option for map
         if($scope.mapstate == 0){
             $scope.mapstate = 1;
         }
         else {
             $scope.mapstate = 0;
         }
-        //angular.element(el.currentTarget).toggleClass('hide');
     }
-
 
     //update size of album images if page is resized. Use timeout to give a slight delay
     $window.onresize = function(){
@@ -290,6 +287,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     //be clever and apply a top/bottom margin to each image to centre it in the page and ensure the caption is always at the bottom
     //this works on next/prev because images are already loaded but not on initial album load
     //...sooooo... yeah. I've done it in CSS instead. Works fine. Leaving this here for the moment for reference
+    /*
     $scope.adjustImagePos = function(){
         var cheight = document.getElementsByClassName('image' + $scope.currentpic);
         var currimg = cheight[0];
@@ -297,6 +295,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         //console.log(cheight);
         currimg.setAttribute('style','margin-top:' + cheight + "px;" + 'margin-bottom:' + cheight + "px");
     }
+    */
 
 
     $scope.getAlbumPicSize();
