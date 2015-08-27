@@ -68,7 +68,6 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.getAlbumPicSize = function(){
         $scope.albumpicwidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
         $scope.albumpicheight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-        //console.log('getAlbumPicSize ',$scope.albumpicwidth,$scope.albumpicheight);
     }
 
     //change view, retrieve JSON of an album if necessary
@@ -80,7 +79,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 $scope.currentview = view;
                 document.title = $scope.album.title + ' | snapd';
                 $scope.mapstate = 1;
-                $scope.doMap();
+                $scope.doMap(); //FIXME if we load thumbs first then go to album, map is initialised in a hidden state and therefore breaks
             });
             rp.error(function(data, status, headers, config) {
                 alert("AJAX failed!");
@@ -88,19 +87,20 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         }
         else {
             $scope.currentview = view;
+            $scope.doMap();
         }
     }
 
-    //show album, called on click of album link
+    //show album, called on click of album link or clicking on thumbnail in thumbs view
     $scope.loadAlbum = function(url,fakeurl,pic){
+        console.log('loadAlbum');
         pic = typeof pic !== 'undefined' ? pic : 0;
         $scope.updatePageURL(fakeurl);
         $scope.getAlbum(url,'album');
         $scope.currentpic = pic;
-        $scope.highlightMarker(1);
     }
 
-    //show thumbs
+    //show thumbs, called on click from main page
     $scope.loadThumbs = function(url,fakeurl){
         $scope.updatePageURL(fakeurl);
         $scope.getAlbum(url,'thumbs');
@@ -189,6 +189,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     //FIXME still a bug going from thumbs to album, map not initing correctly
     //given an album with lat long data, generate and insert a google map for it
     $scope.doMap = function(){
+        console.log('doMap');
         //only create a map if it doesn't exist already
         if($scope.map == 0){
             //console.log('creating map');
