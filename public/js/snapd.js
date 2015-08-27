@@ -20,6 +20,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.markers = [];
     $scope.infolinks = [];
     $scope.mapstate = 1;
+    $scope.infowindow = new google.maps.InfoWindow();
 
     //on page load figure out what the current url is and therefore what to show
     $scope.getCurrentLocation = function(){
@@ -96,6 +97,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         $scope.updatePageURL(fakeurl);
         $scope.getAlbum(url,'album');
         $scope.currentpic = pic;
+        $scope.highlightMarker(1);
     }
 
     //show thumbs
@@ -108,7 +110,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.showPrev = function(apply){
         $scope.currentpic = Math.max($scope.currentpic - 1,0);
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
-        $scope.highlightMarker();
+        $scope.highlightMarker(1);
         if(apply){
             $scope.$apply(); //needed to action keypress event for some reason, but causes problem on ng-click
         }
@@ -117,30 +119,43 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.showNext = function(apply){
         $scope.currentpic = Math.min($scope.currentpic + 1,$scope.album.size);
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
-        $scope.highlightMarker();
+        $scope.highlightMarker(1);
         if(apply){
             $scope.$apply();
         }
     }
 
     //triggered when we navigate to a new photo, highlight the current photo on the map
-    $scope.highlightMarker = function(){
+    //resetmap flags whether we should move the map to show all markers - true when next/prev, not so elsewhere
+    $scope.highlightMarker = function(resetmap){
         var curr = $scope.currentpic;
+        //console.log('highlightMarker ',curr,$scope.album.size);
         //console.log('change marker ', $scope.currentpic, curr);
-        if(curr < $scope.album.size - 1){
+        if(curr < $scope.album.size){
             var bounds = new google.maps.LatLngBounds(null);
             for(var i = 0; i < $scope.markers.length; i++){ //not all photos may have a marker, so check first
                 if($scope.markers[i]){
                     $scope.markers[i].setIcon($scope.url_mediapath + 'marker.png');
                     $scope.markers[i].setZIndex(i);
-                    bounds.extend($scope.markers[i].position);
+                    $scope.infowindow.close(); //FIXME not sure this is working in all situations
+                    if(resetmap){
+                        bounds.extend($scope.markers[i].position);
+                    }
                 }
             }
-            setTimeout(function() {$scope.map.fitBounds(bounds);},1);
+            if(resetmap){
+                setTimeout(function() {$scope.map.fitBounds(bounds);},1);
+            }
             if($scope.markers[curr]){
+                //console.log('found curr');
                 $scope.markers[curr].setIcon($scope.url_mediapath + 'marker_current.png');
                 $scope.markers[curr].setZIndex(100);
             }
+            /*
+            else {
+                console.log('no curr');
+            }
+            */
         }
     }
 
@@ -167,12 +182,13 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     //click in an infowindow, change to picture chosen
     $scope.switchPic = function(pic){
         $scope.currentpic = pic;
+        $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
+        $scope.highlightMarker();
     }
 
     //FIXME still a bug going from thumbs to album, map not initing correctly
     //given an album with lat long data, generate and insert a google map for it
     $scope.doMap = function(){
-
         //only create a map if it doesn't exist already
         if($scope.map == 0){
             //console.log('creating map');
@@ -187,7 +203,6 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
 
         $scope.infolinks = [];
         var bounds = new google.maps.LatLngBounds(null);
-        var infowindow = new google.maps.InfoWindow();
 
         for(var i = 0; i < $scope.album.size; i++){
             var latlong = $scope.album[i]['latlong'];
@@ -217,15 +232,14 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 $scope.infolinks[i] = $compile(lnk)($scope);
                 google.maps.event.addListener(marker, 'click', (function(marker, i) {
                     return function() {
-                      infowindow.setContent($scope.infolinks[i][0]);
-                      infowindow.open($scope.map, marker);
+                        $scope.infowindow.setContent($scope.infolinks[i][0]);
+                        $scope.infowindow.open($scope.map, marker);
                     }
                   })(marker, i));
-                //$scope.markers.push(marker); //add marker to our list
-                $scope.markers[i] = marker;
+                $scope.markers[i] = marker; //add marker to our list but retain index
             }
         }
-        google.maps.event.addListener($scope.map, "click", function() {infowindow.close();});
+        google.maps.event.addListener($scope.map, "click", function() {$scope.infowindow.close();});
         //fitbounds doesn't work the second time, leaves the map too zoomed out
         //hacky but works: http://stackoverflow.com/questions/3873195/calling-map-fitbounds-multiple-times-in-google-maps-api-v3-0
         setTimeout(function() {$scope.map.fitBounds(bounds);},1);

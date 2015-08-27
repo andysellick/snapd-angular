@@ -38,7 +38,7 @@
 
         <div ng-show="currentview == 'thumbs'">
             <div ng-repeat="item in album">
-                <div>
+                <div ng-if="item.thumb">
                     <img src="{{ item.thumb }}" ng-click="loadAlbum(item.albumlinkaj,item.link + item.picid,item.picid)"/>
                     <i class="icon-camera"></i> {{ item.desc }}
                 </div>
