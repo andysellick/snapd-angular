@@ -7,6 +7,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.albumpicwidth = 0;
     $scope.albumpicheight = 0;
     $scope.promise;
+    $scope.loading;
 
     //aspects of the url, used for ajax requests and url manipulation
     //FIXME might not need all of these eventually
@@ -52,10 +53,12 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         }
         else {
             var rp = $http.get($scope.url_fullpath + "/home-data");
+            $scope.loading = 'on';
             rp.success(function(data, status, headers, config) {
                 $scope.albums = data;
                 $scope.currentview = 'home';
                 $scope.updatePageURL($scope.url_sitepath);
+                $scope.loading = '';
             });
             rp.error(function(data, status, headers, config) {
                 alert("AJAX failed!");
@@ -74,11 +77,13 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.getAlbum = function(url,view){
         if(!$scope.album){
             var rp = $http.get($scope.url_fullpath + url);
+            $scope.loading = 'on';
             rp.success(function(data, status, headers, config) {
                 $scope.album = data;
                 $scope.switchView(view);
                 $scope.mapstate = 1;
                 document.title = $scope.album.title + ' | snapd';
+                $scope.loading = '';
             });
             rp.error(function(data, status, headers, config) {
                 alert("AJAX failed!");
@@ -269,7 +274,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
             $scope.mapstate = 0;
         }
     }
-
+    
     //update size of album images if page is resized. Use timeout to give a slight delay
     $window.onresize = function(){
         $timeout.cancel($scope.promise);

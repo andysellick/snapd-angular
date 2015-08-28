@@ -60,9 +60,26 @@
         z-index:99;
         bottom:0;
         right:0;
-        padding:0.5em 1em;
-        background:rgba(0,0,0,0.5);
+        max-width:30%;
+        .border-box();
+        .box-shadow( 2px 2px 4px rgba(0,0,0,0.5) inset );
+        .border-radius( 4px 0 0 0 );
+        background:rgba(0,0,0,0.1);
         color:#FFFFFF;
+        .nav {
+            float:left;
+            padding:0.5em;
+            text-decoration:none;
+            font-size:120%;
+            line-height:1em;
+            &:hover {
+                color:#FFFFFF;
+            }
+        }
+        .progress {
+            font-size:100%;
+            line-height:1.4em;
+        }
     }
 
     .albumwrapper {
@@ -89,8 +106,56 @@
             left:0;
             width:100%;
             padding:1em;
+            padding-right:30%;
+            border-top:solid 1px rgb(63,63,63);
             .border-box();
-            background:rgba(0,0,0,0.5);
+            .box-shadow( 0 1px 0 rgba(255,255,255,0.3) inset );
+            background:rgba(63,63,63,0.95);
             color:#FFFFFF;
+        }
+    }
+    
+    .loading {
+        display:none;
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(255,255,255,0.5);
+        &.on {
+            display:block;
+        }
+        &:before { /* icon-circle-o-notch */
+            content: "\f1ce";
+            position:absolute;
+            top:50%;
+            left:0;
+            width:100%;
+            text-align:center;
+            font-family:'icomoon';
+            font-size:180%;
+            -webkit-animation: loadanim 2s linear infinite; /* Safari 4+ */
+            -moz-animation:    loadanim 2s linear infinite; /* Fx 5+ */
+            -o-animation:      loadanim 2s linear infinite; /* Opera 12+ */
+            animation:         loadanim 2s linear infinite; /* IE 10+, Fx 29+ */
+            
+        }
+    }
+    
+    /* define vendor specific calls here... */
+    @-webkit-keyframes loadanim {.loading;}
+    @-moz-keyframes loadanim {.loading;}
+    @-ms-keyframes loadanim {.loading;}
+    @-o-keyframes loadanim {.loading;}
+    @keyframes loadanim {.loading;}
+
+    /* ..then define animation here. */
+    .loading(){
+        0%   {
+            .transform( rotate(0deg) );
+        }
+        100% {
+            .transform( rotate(360deg) );
         }
     }

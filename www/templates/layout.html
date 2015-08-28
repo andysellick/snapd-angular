@@ -5,11 +5,13 @@
         <div ng-show="currentview == 'home'" class="grid page">
             <div ng-repeat="item in albums" class="col">
                 <div class="row">
-                    <div class="span6">
+                    <div class="span5">
                         <img src="/snapd-angular/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.thumb }}" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)"/>
                     </div>
-                    <div class="span6">
-                        <p>{{ item.name }}, {{ item.date }}, {{ item.intro }}</p>
+                    <div class="span7">
+                        <h2>{{ item.name }}</h2>
+                        <h3>{{ item.date }}</h3>
+                        <p>{{ item.intro }}</p>
                         <p>
                             <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="faux_link"><i class="icon-camera"></i> Album</span>
                             <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)" class="faux_link"><i class="icon-th-large"></i> Thumbs</span>
@@ -26,10 +28,10 @@
                 <div id="map" class="map" ng-show="markers.length > 0"></div>
             </div>
             <nav class="albumnav">
-                <span ng-show="currentpic > 0" ng-click="showPrev()" class="faux_link"><i class="icon-chevron-left"></i> Previous</span>
-                <span ng-show="currentpic < album.size" ng-click="showNext()" class="faux_link">Next <i class="icon-chevron-right"></i></span>
-                <span ng-click="loadThumbs('',url_sitepath + '/thumbs' + album.link)" class="faux_link">Thumbs <i class="icon-th-large"></i></span>
-                <span>Picture {{ currentpic + 1 }} of {{ album.size + 1 }}</span>
+                <span ng-show="currentpic > 0" ng-click="showPrev()" class="nav faux_link" title="Previous"><i class="icon-chevron-left"></i></span>
+                <span ng-show="currentpic < album.size" ng-click="showNext()" class="nav faux_link" title="Next"><i class="icon-chevron-right"></i></span>
+                <span ng-click="loadThumbs('',url_sitepath + '/thumbs' + album.link)" class="nav faux_link" title="Thumbs"><i class="icon-th-large"></i></span>
+                <span class="nav progress">{{ currentpic + 1 }} of {{ album.size + 1 }}</span>
             </nav>
             <div ng-repeat="item in album" ng-show="currentpic == item.picid">
                 <div class="albumwrapper">
@@ -49,12 +51,14 @@
                         <img src="{{ item.thumb }}" ng-click="loadAlbum(item.albumlinkaj,item.link + item.picid,item.picid)"/>
                     </div>
                     <div class="span6">
-                        <i class="icon-camera"></i> {{ item.desc }}
+                        <p><i class="icon-camera"></i> {{ item.desc }}</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <div class="loading {{ loading }}"></div>
 
 
     <div class="jshide">
