@@ -76,24 +76,28 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
             var rp = $http.get($scope.url_fullpath + url);
             rp.success(function(data, status, headers, config) {
                 $scope.album = data;
-                $scope.currentview = view;
-                document.title = $scope.album.title + ' | snapd';
+                $scope.switchView(view);
                 $scope.mapstate = 1;
-                $scope.doMap(); //FIXME if we load thumbs first then go to album, map is initialised in a hidden state and therefore breaks
+                document.title = $scope.album.title + ' | snapd';
             });
             rp.error(function(data, status, headers, config) {
                 alert("AJAX failed!");
             });
         }
         else {
-            $scope.currentview = view;
-            $scope.doMap();
+            $scope.switchView(view);
         }
+    }
+
+    //generic function for changing view, consolidating due to map
+    $scope.switchView = function(view){
+        $scope.currentview = view;
+        $scope.doMap(); //if we load thumbs first then go to album, map is initialised in a hidden state and therefore breaks
     }
 
     //show album, called on click of album link or clicking on thumbnail in thumbs view
     $scope.loadAlbum = function(url,fakeurl,pic){
-        console.log('loadAlbum');
+        //console.log('loadAlbum');
         pic = typeof pic !== 'undefined' ? pic : 0;
         $scope.updatePageURL(fakeurl);
         $scope.getAlbum(url,'album');
@@ -172,7 +176,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     //called on browser back, updates relevant stuff
     $scope.setView = function(view,pic,album){
         //console.log('setView ',view,pic,album);
-        $scope.currentview = view;
+        $scope.switchView(view);
         $scope.currentpic = pic;
         $scope.album = album;
         //console.log($scope.currentview);
@@ -189,61 +193,64 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     //FIXME still a bug going from thumbs to album, map not initing correctly
     //given an album with lat long data, generate and insert a google map for it
     $scope.doMap = function(){
-        console.log('doMap');
-        //only create a map if it doesn't exist already
-        if($scope.map == 0){
-            //console.log('creating map');
-            $scope.map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 20,
-            });
-        }
-        else {
-            //console.log('clearing map');
-            $scope.deleteMarkers();
-        }
-
-        $scope.infolinks = [];
-        var bounds = new google.maps.LatLngBounds(null);
-
-        for(var i = 0; i < $scope.album.size; i++){
-            var latlong = $scope.album[i]['latlong'];
-            //console.log(latlong);
-            if(latlong.length){
-                latlong = latlong.split(',');
-                latlong = {lat:parseFloat(latlong[0]), lng:parseFloat(latlong[1].trim())};
-                //console.log(latlong);
-                var markerimg = 'marker.png';
-                var zindex = i;
-                if(i == $scope.currentpic){
-                    markerimg = 'marker_current.png';
-                    zindex = 100;
-                }
-                var marker = new google.maps.Marker({
-                    position: latlong,
-                    map: $scope.map,
-                    zIndex: zindex,
-                    icon: $scope.url_mediapath + markerimg
+        //console.log('doMap');
+        //only init the map if we're on the album page, where it is visible
+        if($scope.currentview == 'album'){
+            //only create a map if it doesn't exist already
+            if($scope.map == 0){
+                //console.log('creating map');
+                $scope.map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 20,
                 });
-
-                bounds.extend(marker.position);
-                //links to go into the infowindows
-                //in order for the ng-click to work, we need to $compile them against the scope
-                //however, doing so repeats itself, which is why each has to be done as a separate entity
-                var lnk = '<span ng-click="switchPic(' + i + ')">' + $scope.album[i]['desc'] + '<br/><span class="faux_link">View</span></span>';
-                $scope.infolinks[i] = $compile(lnk)($scope);
-                google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                    return function() {
-                        $scope.infowindow.setContent($scope.infolinks[i][0]);
-                        $scope.infowindow.open($scope.map, marker);
-                    }
-                  })(marker, i));
-                $scope.markers[i] = marker; //add marker to our list but retain index
             }
+            else {
+                //console.log('clearing map');
+                $scope.deleteMarkers();
+            }
+    
+            $scope.infolinks = [];
+            var bounds = new google.maps.LatLngBounds(null);
+    
+            for(var i = 0; i < $scope.album.size; i++){
+                var latlong = $scope.album[i]['latlong'];
+                //console.log(latlong);
+                if(latlong.length){
+                    latlong = latlong.split(',');
+                    latlong = {lat:parseFloat(latlong[0]), lng:parseFloat(latlong[1].trim())};
+                    //console.log(latlong);
+                    var markerimg = 'marker.png';
+                    var zindex = i;
+                    if(i == $scope.currentpic){
+                        markerimg = 'marker_current.png';
+                        zindex = 100;
+                    }
+                    var marker = new google.maps.Marker({
+                        position: latlong,
+                        map: $scope.map,
+                        zIndex: zindex,
+                        icon: $scope.url_mediapath + markerimg
+                    });
+    
+                    bounds.extend(marker.position);
+                    //links to go into the infowindows
+                    //in order for the ng-click to work, we need to $compile them against the scope
+                    //however, doing so repeats itself, which is why each has to be done as a separate entity
+                    var lnk = '<span ng-click="switchPic(' + i + ')">' + $scope.album[i]['desc'] + '<br/><span class="faux_link">View</span></span>';
+                    $scope.infolinks[i] = $compile(lnk)($scope);
+                    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                        return function() {
+                            $scope.infowindow.setContent($scope.infolinks[i][0]);
+                            $scope.infowindow.open($scope.map, marker);
+                        }
+                      })(marker, i));
+                    $scope.markers[i] = marker; //add marker to our list but retain index
+                }
+            }
+            google.maps.event.addListener($scope.map, "click", function() {$scope.infowindow.close();});
+            //fitbounds doesn't work the second time, leaves the map too zoomed out
+            //hacky but works: http://stackoverflow.com/questions/3873195/calling-map-fitbounds-multiple-times-in-google-maps-api-v3-0
+            setTimeout(function() {$scope.map.fitBounds(bounds);},1);
         }
-        google.maps.event.addListener($scope.map, "click", function() {$scope.infowindow.close();});
-        //fitbounds doesn't work the second time, leaves the map too zoomed out
-        //hacky but works: http://stackoverflow.com/questions/3873195/calling-map-fitbounds-multiple-times-in-google-maps-api-v3-0
-        setTimeout(function() {$scope.map.fitBounds(bounds);},1);
     }
 
     //remove markers from map
