@@ -133,15 +133,13 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     //resetmap flags whether we should move the map to show all markers - true when next/prev, not so elsewhere
     $scope.highlightMarker = function(resetmap){
         var curr = $scope.currentpic;
-        //console.log('highlightMarker ',curr,$scope.album.size);
-        //console.log('change marker ', $scope.currentpic, curr);
         if(curr < $scope.album.size){
             var bounds = new google.maps.LatLngBounds(null);
-            for(var i = 0; i < $scope.markers.length; i++){ //not all photos may have a marker, so check first
-                if($scope.markers[i]){
+            for(var i = 0; i < $scope.markers.length; i++){
+                if($scope.markers[i]){ //not all photos may have a marker, so check first
                     $scope.markers[i].setIcon($scope.url_mediapath + 'marker.png');
                     $scope.markers[i].setZIndex(i);
-                    $scope.infowindow.close(); //FIXME not sure this is working in all situations
+                    $scope.infowindow.close();
                     if(resetmap){
                         bounds.extend($scope.markers[i].position);
                     }
@@ -150,16 +148,10 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
             if(resetmap){
                 setTimeout(function() {$scope.map.fitBounds(bounds);},1);
             }
-            if($scope.markers[curr]){
-                //console.log('found curr');
+            if($scope.markers[curr]){ //because photo may not have a position
                 $scope.markers[curr].setIcon($scope.url_mediapath + 'marker_current.png');
                 $scope.markers[curr].setZIndex(100);
             }
-            /*
-            else {
-                console.log('no curr');
-            }
-            */
         }
     }
 
