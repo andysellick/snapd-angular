@@ -62,16 +62,10 @@
 
 
     <div class="jshide">
-        <div id="albumlist">
-            {% block albumlist %}{% endblock albumlist %}
-        </div>
+        {% block albumlist %}{% endblock albumlist %}
 
-        <div id="album">
-            {% block album %}{% endblock album %}
-        </div>
+        {% block album %}{% endblock album %}
 
-        <div id="thumbs">
-            {% block thumbs %}{% endblock thumbs %}
-        </div>
+        {% block thumbs %}{% endblock thumbs %}
     </div>
 {% endblock content %}

@@ -1,17 +1,23 @@
 {% extends 'layout.html' %}
 
 {% block thumbs %}
-    TEMPLATE
+    <div class="grid page">
     {% for showAThumbOrTwo %}
-        <div>
-            {% if thumb %}
-                <a href="[[ link ]][[ picid ]]">
-                    <img src="[[ thumb ]]"/>
-                </a>
-            {% endif %}
-            {% if desc %}
-                <p>[[ desc ]]</p>
-            {% endif %}
+        <div class="col">
+            <div class="row">
+                <div class="span6">
+                    {% if thumb %}
+                        <a href="[[ link ]][[ picid ]]">
+                            <img src="[[ thumb ]]"/>
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="span6">
+                    {% if desc %}
+                        <p><i class="icon-camera"></i> [[ desc ]]</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     {% endfor %}
 {% endblock thumbs %}

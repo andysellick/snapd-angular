@@ -1,28 +1,27 @@
 {% extends 'layout.html' %}
 
 {% block albumlist %}
-    TEMPLATE
-    {% for listAlbums %}
-        <div>
-            <a href="[[ albumlink ]]" data-loadalbum="[[ albumlinkaj ]]">
-                <img src="public/img/thumbs/[[ thumb ]]" alt="[[ thumb ]]"/>
-            </a>
-            <p>[[ name ]], [[ date ]], [[ intro ]]</p>
-            <p>
-                <a href="[[ albumlink ]]" data-loadalbum="[[ albumlinkaj ]]">Album</a>
-                <a href="[[ thumbslink ]]" data-loadalbum="[[ thumbslinkaj ]]">Thumbs</a>
-            </p>
-        </div>
-    {% endfor %}
+    <div class="grid page">
+        {% for listAlbums %}
+            <div class="col">
+                <div class="row">
+                    <div class="span5">
+                        <a href="[[ albumlink ]]" data-loadalbum="[[ albumlinkaj ]]">
+                            <img src="public/img/thumbs/[[ thumb ]]" alt="[[ thumb ]]"/>
+                        </a>
+                    </div>
+                    <div class="span7">
+                        <h2>[[ name ]]</h2>
+                        <h3>[[ date ]]</h3>
+                        <p>[[ intro ]]</p>
+                        <p>
+                            <a href="[[ albumlink ]]" data-loadalbum="[[ albumlinkaj ]]"><i class="icon-camera"></i> Album</a>
+                            <a href="[[ thumbslink ]]" data-loadalbum="[[ thumbslinkaj ]]"><i class="icon-th-large"></i> Thumbs</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock albumlist %}
-
-{% block scripts %}
-    <script>
-        /*
-        $(document).ready(function(){
-            lenny.ajax.loadAlbumList();
-        });
-        */
-    </script>
-{% endblock scripts %}
 

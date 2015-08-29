@@ -3,25 +3,26 @@
 {% block title %}[[ title ]] | [[ block.super ]]{% endblock title %}
 
 {% block album %}
-    TEMPLATE
-    <div>
+    <nav class="albumnav">
         {% if prev %}
-            <a href="[[ prev ]]" data-prev="">Previous</a>
+            <a href="[[ prev ]]" title="Previous" class="nav"><i class="icon-chevron-left"></i></a>
         {% endif %}
         {% if next %}
-            <a href="[[ next ]]" data-next="">Next</a>
+            <a href="[[ next ]]" title="Next" class="nav"><i class="icon-chevron-right"></i></a>
         {% endif %}
-        
-        <a href="[[ thumbslink ]]">View thumbs</a>
+
+        <a href="[[ thumbslink ]]" title="Thumbs" class="nav"><i class="icon-th-large"></i></a>
+    </nav>
+    
+    <div class="albumwrapper">
+        {% if pic %}
+            <div class="imagewrapper clearfix">
+                <img src="[[ pic ]]"/>
+            </div>
+        {% endif %}
+    
+        {% if desc %}
+            <div class="caption">[[ desc ]]</div>
+        {% endif %}
     </div>
-
-    {% if pic %}
-        <div data-pic="">
-            <img src="[[ pic ]]"/>
-        </div>
-    {% endif %}
-
-    {% if desc %}
-        <div data-desc="">[[ desc ]]</div>
-    {% endif %}
 {% endblock album %}
