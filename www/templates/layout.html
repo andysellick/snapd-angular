@@ -31,6 +31,7 @@
                 <span ng-show="currentpic > 0" ng-click="showPrev()" class="nav faux_link" title="Previous"><i class="icon-chevron-left"></i></span>
                 <span ng-show="currentpic < album.size" ng-click="showNext()" class="nav faux_link" title="Next"><i class="icon-chevron-right"></i></span>
                 <span ng-click="loadThumbs('',url_sitepath + '/thumbs' + album.link)" class="nav faux_link" title="Thumbs"><i class="icon-th-large"></i></span>
+                <span ng-click="viewFullSize()" class="nav faux_link" title="Full size"><i class="icon-search-plus"></i></span>
                 <span class="nav progress">{{ currentpic + 1 }} of {{ album.size + 1 }}</span>
             </nav>
             <div ng-repeat="item in album" ng-show="currentpic == item.picid">
@@ -41,6 +42,7 @@
                     <div class="caption">{{ item.desc }}</div>
                 </div>
             </div>
+            <div class="fullimage {{ fullimage }}"></div>
         </div>
 
 

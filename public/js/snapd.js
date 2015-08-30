@@ -186,6 +186,11 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
         $scope.highlightMarker();
     }
+    
+    //open current image at full size
+    $scope.viewFullSize = function(){
+        
+    }
 
     //FIXME still a bug going from thumbs to album, map not initing correctly
     //given an album with lat long data, generate and insert a google map for it
