@@ -189,7 +189,9 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     
     //open current image at full size
     $scope.viewFullSize = function(){
-        
+        console.log($scope.album[$scope.currentpic]['pic']);
+        document.getElementById('fullimage').innerHTML = '<img src="' + $scope.url_mediapath + 'pics/' + $scope.album[$scope.currentpic]['pic'] + '"/>';
+        $scope.fullimage = 'on';
     }
 
     //FIXME still a bug going from thumbs to album, map not initing correctly
