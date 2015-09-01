@@ -127,6 +127,31 @@
         background:rgba(255,255,255,0.5);
         &.on {
             display:block;
+            & + .closefull {
+                display:block;
+            }
+        }
+        img {
+            display:block;
+            margin:0 auto;
+        }
+    }
+    .closefull {
+        display:none;
+        position:fixed;
+        z-index:201;
+        bottom:0;
+        right:0;
+        padding:0.5em;
+        .border-radius( 5px 0 0 0 );
+        background:rgba(255,255,255,0.5);
+        color:orange;
+        cursor:pointer;
+        font-size:120%;
+        line-height:1em;
+        text-shadow:1px 1px 1px #000;
+        &:hover {
+            color:#FFFFFF;
         }
     }
 
