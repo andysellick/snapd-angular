@@ -50,6 +50,7 @@ class cdHandler extends xmlStuff {
                             'date' => self::parseFilenameAsDate((string)$file),
                             'intro' => (string)$xml["desc"],
                             'thumb' => $thumb,
+                            'count' => $xml->pic->count(),
                             'thumbslink' => $this->sitepath.'/thumbs/'.$link.'/'.$linkname.'/',
                             'thumbslinkaj' => '/album-data/'.$link.'/'.$linkname.'/',
                             'albumlink' => $this->sitepath.'/album/'.$link.'/'.$linkname.'/0',
