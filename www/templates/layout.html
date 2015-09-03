@@ -22,7 +22,7 @@
         </div>
 
 
-        <div ng-show="currentview == 'album'">
+        <div ng-show="currentview == 'album'" class="album">
             <div class="mapwrapper">
                 <div class="map-toggle mapstate{{ mapstate }}" ng-click="toggleMap()">+</div>
                 <div id="map" class="map" ng-show="markers.length > 0"></div>
@@ -34,13 +34,11 @@
                 <span ng-click="viewFullSize()" class="nav faux_link" title="Full size"><i class="icon-search-plus"></i></span>
                 <span class="nav progress">{{ currentpic + 1 }} of {{ album.size + 1 }}</span>
             </nav>
-            <div ng-repeat="item in album" ng-show="currentpic == item.picid">
-                <div class="albumwrapper">
-                    <div class="imagewrapper clearfix" ng-class="{selected: currentpic == item.picid}"> {% comment %}selected needed?{% endcomment %}
-                        <img src="/snapd-angular/makeImage.php?img=public/img/pics/{{ item.pic }}&quality=80&width={{ albumpicwidth }}&height={{ albumpicheight }}" alt=""/>
-                    </div>
-                    <div class="caption">{{ item.desc }}</div>
+            <div ng-repeat="item in album" class="albumwrapper" ng-class="{selected: currentpic == item.picid}"> <!-- ng-show="currentpic == item.picid" -->
+                <div class="imagewrapper clearfix">
+                    <img src="/snapd-angular/makeImage.php?img=public/img/pics/{{ item.pic }}&quality=80&width={{ albumpicwidth }}&height={{ albumpicheight }}" alt=""/>
                 </div>
+                <div class="caption">{{ item.desc }}</div>
             </div>
             <div id="fullimage" class="fullimage {{ fullimage }}"></div>
             <div class="closefull" ng-click="closeFullSize()" title="Close"><i class="icon-search-minus"></i></div>
