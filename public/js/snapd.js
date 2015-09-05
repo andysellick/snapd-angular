@@ -276,14 +276,8 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     
 
     //show/hide map on click of element, triggered action mostly handled by CSS
-    $scope.toggleMap = function(){
-        var states = [0,1,2]; //FIXME this isn't used yet, need a 'full' option for map
-        if($scope.mapstate == 0){
-            $scope.mapstate = 1;
-        }
-        else {
-            $scope.mapstate = 0;
-        }
+    $scope.toggleMap = function(stat){
+        $scope.mapstate = stat;
     }
     
     //update size of album images if page is resized. Use timeout to give a slight delay
