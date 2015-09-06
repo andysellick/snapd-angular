@@ -33,21 +33,45 @@
 
         .map-toggle {
             position:absolute;
+            z-index:900;
             cursor:pointer;
-            border:solid 2px red;
-            font-size:2em;
+            &:before {
+                padding:0.2em;
+                background:rgba(63,63,63,0.5);
+                font-family:icomoon;
+                font-size:120%;
+                color:orange;
+                text-shadow:1px 1px 1px #000;
+            }
+            &:hover {
+                &:before {
+                    color:#FFFFFF;
+                }
+            }
+
             &.min {
                 top:0;
-                right:100%;
+                left:0;
+                &:before {
+                    content: "\f054"; /* chevron right */
+                    .border-radius( 0 4px 4px 0 );
+                }
             }
             &.norm {
                 top:0;
                 left:0;
-                z-index:999;
+                &:before {
+                    content: "\f053"; /* chevron left */
+                    .border-radius( 4px 0 0 4px );
+                }
             }
             &.max {
-                bottom:0;
+                top:0;
                 right:100%;
+                &:before {
+                    content: "\f053"; /* chevron left */
+                    .border-radius( 4px 0 0 4px );
+                }
             }
         }
         .map {
@@ -56,6 +80,7 @@
             border:solid 1px #000;
             border-top:0;
             border-right:0;
+            .border-radius( 0 0 0 4px );
         }
 
         &.mapstate0 { /* map is completely hidden */
@@ -68,6 +93,9 @@
                 left:auto;
                 right:100%;
             }
+            .max {
+                display:none;
+            }
         }
         &.mapstate1 { /* map is shown in a small box */
             width:300px;
@@ -79,6 +107,12 @@
         &.mapstate2 { /* map fills the screen */
             width:100%;
             height:100%;
+            .norm {
+                &:before {
+                    content: "\f054"; /* chevron right */
+                    .border-radius( 0 4px 4px 0 );
+                }
+            }
             .max {
                 display:none;
             }

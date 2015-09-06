@@ -209,6 +209,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 //console.log('creating map');
                 $scope.map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 20,
+                    disableDefaultUI: true
                 });
             }
             else {
