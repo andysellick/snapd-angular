@@ -202,12 +202,12 @@
         display:none;
         position:fixed;
         z-index:200;
-        overflow:hidden;
+        overflow:scroll;
         top:0;
         left:0;
         width:100%;
         height:100%;
-        background:rgba(255,255,255,0.5);
+        background:rgba(255,255,255,0.9);
         &.on {
             display:block;
             & + .closefull {
@@ -216,9 +216,10 @@
         }
         img {
             display:block;
-            position:absolute;
+            //position:absolute;
             top:0;
             left:0;
+            margin:0 auto;
         }
     }
     .closefull {
@@ -229,7 +230,7 @@
         right:0;
         padding:0.5em;
         .border-radius( 5px 0 0 0 );
-        background:rgba(255,255,255,0.5);
+        background:rgba(63,63,63,0.5);
         color:orange;
         cursor:pointer;
         font-size:120%;
