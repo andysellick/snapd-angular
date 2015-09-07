@@ -279,6 +279,11 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     //show/hide map on click of element, triggered action mostly handled by CSS
     $scope.toggleMap = function(stat){
         $scope.mapstate = stat;
+        //$scope.highlightMarker(1);
+        //setTimeout(function() {$scope.map.fitBounds(bounds);},1);
+        $timeout(function(){google.maps.event.trigger($scope.map, "resize");console.log('wa');},1000); //FIXME do all the other settimeouts need to use $timeout??
+        //FIXME this is getting close but needs to refit the map to bounds on resize
+
     }
     
     //update size of album images if page is resized. Use timeout to give a slight delay
