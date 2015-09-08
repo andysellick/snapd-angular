@@ -281,7 +281,10 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         $scope.mapstate = stat;
         //$scope.highlightMarker(1);
         //setTimeout(function() {$scope.map.fitBounds(bounds);},1);
-        $timeout(function(){google.maps.event.trigger($scope.map, "resize");console.log('wa');},1000); //FIXME do all the other settimeouts need to use $timeout??
+        $timeout(function(){
+            google.maps.event.trigger($scope.map, "resize");
+            $scope.highlightMarker(1);
+        },500); //FIXME do all the other settimeouts need to use $timeout??
         //FIXME this is getting close but needs to refit the map to bounds on resize
 
     }
