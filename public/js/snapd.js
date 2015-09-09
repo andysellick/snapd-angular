@@ -185,6 +185,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         $scope.currentpic = pic;
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
         $scope.highlightMarker();
+        $scope.toggleMap(1);
     }
     
     //open current image at full size
