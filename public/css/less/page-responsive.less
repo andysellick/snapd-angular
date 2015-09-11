@@ -1,0 +1,23 @@
+
+    .mapwrapper {
+
+        &.mapstate1 {
+            width:0;
+
+            .map-refresh {
+                display:none;
+            }
+        }
+        
+        .map-toggle,
+        .map-refresh {
+            font-size:130%;
+        }
+        
+        .map-toggle.max {
+            &:before {
+                content: "\f0ac"; /* globe */
+            }
+        }
+        
+    }
