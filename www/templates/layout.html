@@ -18,6 +18,7 @@
                     <span class="count">{{ item.count }} photos</span>
                     <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="faux_link" title="Album"><i class="icon-camera"></i></span>
                     <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)" class="faux_link" title="Thumbs"><i class="icon-th-large"></i></span>
+                    <span ng-show="item.hasmap == 1" title="Album has a map"><i class="icon-globe"></i></span>
                 </p>
             </div>
         </div>

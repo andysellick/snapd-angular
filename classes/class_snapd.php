@@ -45,6 +45,10 @@ class cdHandler extends xmlStuff {
             $albumid = str_replace("/","-",$link);
             $origpic = (string)$xml['albumdir'].'/'.(string)$xml->pic[$thumb]['file'];
             $thumb = "album-".$albumid."_".$thumb.".jpg";
+            $hasmap = 0;
+            if($xml->pic['latlong']){
+                $hasmap = 1;
+            }
 
             $loopvars = array('name' => (string)$xml["name"],
                             'date' => self::parseFilenameAsDate((string)$file),
@@ -54,7 +58,8 @@ class cdHandler extends xmlStuff {
                             'thumbslink' => $this->sitepath.'/thumbs/'.$link.'/'.$linkname.'/',
                             'thumbslinkaj' => '/album-data/'.$link.'/'.$linkname.'/',
                             'albumlink' => $this->sitepath.'/album/'.$link.'/'.$linkname.'/0',
-                            'albumlinkaj' => '/album-data/'.$link.'/'.$linkname.'/0'
+                            'albumlinkaj' => '/album-data/'.$link.'/'.$linkname.'/0',
+                            'hasmap' => $hasmap
                             );
             self::generateThumb($thumb,$origpic);
             array_push($return,$loopvars);
