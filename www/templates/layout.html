@@ -6,7 +6,9 @@
             <div ng-repeat="item in albums" class="col albumitem">
                 <div class="row">
                     <div class="span5">
-                        <img src="/snapd-angular/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.thumb }}" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)"/>
+                        <div class="img" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="img" ng-class="{hasmap: item.hasmap == 1}">
+                            <img src="/snapd-angular/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.thumb }}" />
+                        </div>
                     </div>
                     <div class="span7">
                         <h2>{{ item.name }}</h2>
@@ -18,7 +20,6 @@
                     <span class="count">{{ item.count }} photos</span>
                     <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="faux_link" title="Album"><i class="icon-camera"></i></span>
                     <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)" class="faux_link" title="Thumbs"><i class="icon-th-large"></i></span>
-                    <span ng-show="item.hasmap == 1" title="Album has a map"><i class="icon-globe"></i></span>
                 </p>
             </div>
         </div>
