@@ -25,36 +25,6 @@
         
         .albumitem {
             margin-bottom:20px;
-            .img {
-                display:inline-block;
-                border:solid 1px grey;
-                cursor:pointer;
-                &:hover {
-                    border-color:orange;
-                    &.hasmap {
-                        &:after {
-                            background:orange;
-                            color:#000000;
-                        }
-                    }
-                }
-                &.hasmap {
-                    position:relative;
-                    &:after {
-                        content: "\f0ac"; /* icon-globe */
-                        position:absolute;
-                        top:0;
-                        right:0;
-                        padding:0.1em;
-                        background:grey;
-                        font-family:'icomoon';
-                        color:#FFFFFF;
-                    }
-                }
-                img {
-                    display:block;
-                }
-            }
             p {
                 font-size:90%;
             }
@@ -67,6 +37,38 @@
             }
         }
     }
+
+    .imglink {
+        &:hover {
+            img {
+                border-color:orange;
+            }
+            &.hasmap {
+                &:after {
+                    background:orange;
+                    color:#000000;
+                }
+            }
+        }
+        &.hasmap {
+            position:relative;
+            &:after {
+                content: "\f0ac"; /* icon-globe */
+                position:absolute;
+                top:0;
+                left:0;
+                padding:0.1em;
+                background:grey;
+                font-family:'icomoon';
+                color:#FFFFFF;
+            }
+        }
+        img {
+            border:solid 1px grey;
+            cursor:pointer;
+        }
+    }
+
 
     .mapwrapper {
         position:absolute;
