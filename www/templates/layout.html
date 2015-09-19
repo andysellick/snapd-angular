@@ -9,18 +9,18 @@
                         <div class="imglink" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" ng-class="{hasmap: item.hasmap == 1}">
                             <img src="/snapd-angular/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.thumb }}" />
                         </div>
+                        <div class="links">
+                            <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="faux_link" title="Album"><i class="icon-camera"></i></span>
+                            <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)" class="faux_link" title="Thumbs"><i class="icon-th-large"></i></span>
+                        </div>
                     </div>
                     <div class="span7">
                         <h2>{{ item.name }}</h2>
                         <h3>{{ item.date }}</h3>
+                        <p class="count">{{ item.count }} photos</p>
                         <p>{{ item.intro }}</p>
                     </div>
                 </div>
-                <p class="links">
-                    <span class="count">{{ item.count }} photos</span>
-                    <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="faux_link" title="Album"><i class="icon-camera"></i></span>
-                    <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)" class="faux_link" title="Thumbs"><i class="icon-th-large"></i></span>
-                </p>
             </div>
         </div>
 
@@ -52,10 +52,12 @@
 
 
         <div ng-show="currentview == 'thumbs'" class="grid page">
-            <div ng-repeat="item in album" class="col">
+            <div ng-repeat="item in album" class="col albumitem">
                 <div ng-if="item.thumb" class="row">
                     <div class="span5">
-                        <img src="{{ item.thumb }}" ng-click="loadAlbum(item.albumlinkaj,item.link + item.picid,item.picid)" class="imglink"/>
+                        <div class="imglink">
+                            <img src="{{ item.thumb }}" ng-click="loadAlbum(item.albumlinkaj,item.link + item.picid,item.picid)"/>
+                        </div>
                     </div>
                     <div class="span7">
                         <p>{{ item.desc }}</p>
