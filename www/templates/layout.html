@@ -9,16 +9,15 @@
                         <div class="imglink" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" ng-class="{hasmap: item.hasmap == 1}">
                             <img src="/snapd-angular/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.thumb }}" />
                         </div>
-                        <div class="links">
+                        <p class="links">
                             <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="faux_link" title="Album"><i class="icon-camera"></i></span>
                             <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)" class="faux_link" title="Thumbs"><i class="icon-th-large"></i></span>
-                        </div>
+                        </p>
                     </div>
                     <div class="span7">
                         <h2>{{ item.name }}</h2>
-                        <h3>{{ item.date }}</h3>
-                        <p class="count">{{ item.count }} photos</p>
-                        <p>{{ item.intro }}</p>
+                        <p class="meta">{{ item.date }}, {{ item.count }} photos</p>
+                        <p class="caption">{{ item.intro }}</p>
                     </div>
                 </div>
             </div>
@@ -60,7 +59,7 @@
                         </div>
                     </div>
                     <div class="span7">
-                        <p>{{ item.desc }}</p>
+                        <p class="caption">{{ item.desc }}</p>
                     </div>
                 </div>
             </div>
