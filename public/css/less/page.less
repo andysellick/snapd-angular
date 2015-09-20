@@ -36,24 +36,28 @@
             }
         }
     }
+    
+    @onhovertrans: 0.3s;
 
     .imglink {
         img {
             margin-bottom:0.3em;
             border:solid 5px @white;
+            .greyscale();
             .border-box();
             .box-shadow( 0px 0px 6px rgba(0,0,0,0.2) );
+            .transition( all @onhovertrans );
             cursor:pointer;
         }
 
         &:hover {
             img {
-                border-color:@blue;
+                .greyscaleoff();
+                .box-shadow( 0px 0px 6px rgba(0,0,0,0.5) );
             }
             &.hasmap {
                 &:after {
-                    background:@blue;
-                    color:@white;
+                    color:@red;
                 }
             }
         }
@@ -67,6 +71,7 @@
                 padding:0.1em 0.2em;
                 background:@white;
                 .border-radius( 0 0 4px 0 );
+                .transition( all @onhovertrans );
                 font-family:'icomoon';
                 color:@blue;
             }
