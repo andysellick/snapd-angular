@@ -170,16 +170,10 @@
         user-select: none;
     }
     
-    .greyscale {
-        -webkit-filter: grayscale(1);
-    	-webkit-filter: grayscale(100%);
+    .greyscale(@value) {
+        -webkit-filter: grayscale(@value / 100);
+    	-webkit-filter: grayscale(@value);
     	filter: gray;
-    	filter: grayscale(100%);
-    	//filter: url(desaturate.svg#greyscale);
-    }
-    .greyscaleoff {
-        -webkit-filter: grayscale(0);
-    	-webkit-filter: grayscale(0%);
-    	filter: none;
+    	filter: grayscale(@value);
     }
 

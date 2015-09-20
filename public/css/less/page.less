@@ -36,14 +36,15 @@
             }
         }
     }
-    
+
     @onhovertrans: 0.3s;
 
     .imglink {
+        .transition( all @onhovertrans );
         img {
             margin-bottom:0.3em;
             border:solid 5px @white;
-            .greyscale();
+            .greyscale( 50% );
             .border-box();
             .box-shadow( 0px 0px 6px rgba(0,0,0,0.2) );
             .transition( all @onhovertrans );
@@ -51,8 +52,9 @@
         }
 
         &:hover {
+            margin:-5px -2% 0px -2%;
             img {
-                .greyscaleoff();
+                .greyscale( 0% );
                 .box-shadow( 0px 0px 6px rgba(0,0,0,0.5) );
             }
             &.hasmap {
