@@ -39,8 +39,20 @@
                 .caption {
                     position:absolute;
                     top:0;
-                    left:0;
-                    width:100%;
+                    right:0;
+                    width:57%;
+                    height:100%;
+                    padding:0;
+                    overflow:hidden;
+                    &:after {
+                        content:"";
+                        position:absolute;
+                        bottom:0;
+                        left:0;
+                        width:100%;
+                        height:50px;
+                        .vertical-gradient( transparent, 0%, @greyLight, 100% );
+                    }
                 }
             }
         }
