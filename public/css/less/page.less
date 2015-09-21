@@ -34,6 +34,15 @@
             .caption {
                 font-size:90%;
             }
+            .thumbcaption {
+                position:relative;
+                .caption {
+                    position:absolute;
+                    top:0;
+                    left:0;
+                    width:100%;
+                }
+            }
         }
     }
 
@@ -41,6 +50,7 @@
 
     .imglink {
         .transition( all @onhovertrans );
+        text-align:center;
         img {
             margin-bottom:0.3em;
             border:solid 5px @white;
