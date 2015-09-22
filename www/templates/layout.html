@@ -5,7 +5,7 @@
         <div ng-show="currentview == 'home'" class="grid page">
             <div ng-repeat="item in albums" class="col albumitem">
                 <div class="row">
-                    <div class="span5">
+                    <div class="span5 align-center">
                         <div class="imglink" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" ng-class="{hasmap: item.hasmap == 1}">
                             <img src="/snapd-angular/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.thumb }}" />
                         </div>
