@@ -20,16 +20,19 @@
             p {
                 font-size:90%;
             }
-            .faux_link {
-                font-size:1.2em;
-                text-decoration:none;
+            .title {
+                margin:0.2em 0;
             }
             .meta {
-
+                color:@greyDark;
             }
             .links {
                 text-align:center;
                 text-shadow:1px 1px 1px rgba(0,0,0,0.2);
+                font-size:1.2em;
+                .faux_link {
+                    text-decoration:none;
+                }
             }
             .caption {
                 font-size:90%;
@@ -64,7 +67,7 @@
         display:inline-block;
         max-width:100%;
         .transition( all @onhovertrans );
-        .transform( scale(0.9) );
+        .transform( scale(0.95) );
         text-align:center;
         img {
             border:solid 5px @white;
