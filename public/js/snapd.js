@@ -22,6 +22,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.infolinks = [];
     $scope.mapstate = 1;
     $scope.infowindow = new google.maps.InfoWindow();
+    $scope.albumClutter = 1;
 
     //on page load figure out what the current url is and therefore what to show
     $scope.getCurrentLocation = function(){
@@ -131,6 +132,15 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         $scope.highlightMarker(1);
         if(apply){
             $scope.$apply();
+        }
+    }
+
+    //show or hide everything in an album apart from navigation
+    $scope.toggleAlbumClutter = function(state,apply){
+        console.log('toggleAlbumClutter ',state);
+        $scope.albumClutter = state;
+        if(apply){
+            $scope.$apply(); //needed to action keypress event for some reason, but causes problem on ng-click
         }
     }
 
@@ -309,11 +319,17 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     document.addEventListener('keydown', function(e){
         e = e || window.event;
         if($scope.currentview == 'album' && $scope.fullimage != 'on'){ //only do the keys if in the album and full size is not active
-            if(e.keyCode == 39 || e.keyCode == 40){
+            if(e.keyCode == 39){ //right
                 $scope.showNext(1);
             }
-            if(e.keyCode == 37 || e.keyCode == 38){
+            if(e.keyCode == 37){ //left
                 $scope.showPrev(1);
+            }
+            if(e.keyCode == 40){ //down
+                $scope.toggleAlbumClutter(0,1); //hide caption, map, etc.
+            }
+            if(e.keyCode == 38){ //up
+                $scope.toggleAlbumClutter(1,1); //show map, caption, etc.
             }
         }
     });

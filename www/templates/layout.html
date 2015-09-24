@@ -24,7 +24,7 @@
         </div>
 
 
-        <div ng-show="currentview == 'album'" class="album">
+        <div ng-show="currentview == 'album'" class="album albumstate{{ albumClutter }}">
             <div class="mapwrapper mapstate{{ mapstate }}">
                 <div class="map-toggle min" ng-click="toggleMap(0)" title="Hide map"></div>
                 <div class="map-toggle norm" ng-click="toggleMap(1)" title="Normal map"></div>
