@@ -137,7 +137,6 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
 
     //show or hide everything in an album apart from navigation
     $scope.toggleAlbumClutter = function(state,apply){
-        console.log('toggleAlbumClutter ',state);
         $scope.albumClutter = state;
         if(apply){
             $scope.$apply(); //needed to action keypress event for some reason, but causes problem on ng-click

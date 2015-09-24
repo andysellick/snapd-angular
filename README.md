@@ -6,7 +6,6 @@ TODO
 
 - zoom/pan full size image
 - thumbnail pagination
-- hide caption/all boxes in album
 - notes on photos
 
 - better design
