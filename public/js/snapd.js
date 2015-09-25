@@ -243,11 +243,13 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                         markerimg = 'marker_current.png';
                         zindex = 100;
                     }
+                    /* zoom is apparently needed even though we don't use it - http://stackoverflow.com/questions/19704609/google-maps-api-3-type-error-a-is-undefined */
                     var marker = new google.maps.Marker({
                         position: latlong,
                         map: $scope.map,
                         zIndex: zindex,
-                        icon: $scope.url_mediapath + markerimg
+                        icon: $scope.url_mediapath + markerimg,
+                        zoom:1
                     });
     
                     bounds.extend(marker.position);
