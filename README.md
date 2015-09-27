@@ -7,5 +7,6 @@ TODO
 - zoom/pan full size image
 - thumbnail pagination
 - notes on photos
+- sort out loading animation (diff icon?)
 
 - better design
