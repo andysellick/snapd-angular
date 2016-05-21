@@ -14,29 +14,58 @@
 
     .page {
         padding-top:50px;
-
-        .albumitem {
-            margin-bottom:20px;
-            p {
-                font-size:90%;
-            }
-            .title {
-                margin:0.2em 0;
-            }
-            .meta {
-                color:@greyDark;
-            }
-            .links {
-                text-align:center;
-                text-shadow:1px 1px 1px rgba(0,0,0,0.2);
-                font-size:1.2em;
-                .faux_link {
-                    text-decoration:none;
-                }
-            }
-            .caption {
-                font-size:90%;
-            }
+	}
+    .albumitem {
+	    .imglink {
+			.aspect(45%);
+			background-repeat:no-repeat;
+			background-position:50% 0;
+			background-size:cover;
+	        .transition( all @onhovertrans );
+	        text-align:center;
+	        
+	        .inner {
+				.horizontal-gradient( transparent, 0%, rgba(255,255,255,0.9), 50% )
+			}
+	
+	        img {
+	            border:solid 5px @white;
+	            .greyscale( 50% );
+	            .border-box();
+	            .box-shadow( 0px 0px 6px rgba(0,0,0,0.2) );
+	            .transition( all @onhovertrans );
+	            cursor:pointer;
+	        }
+	
+	        &:hover {
+	            img {
+	                .greyscale( 0% );
+	                .box-shadow( 0px 0px 6px rgba(0,0,0,0.5) );
+	            }
+	            &.hasmap {
+	                &:after {
+	                    color:@red;
+	                }
+	            }
+	        }
+	        &.hasmap {
+	            position:relative;
+	            &:after {
+	                content: "\f0ac"; /* icon-globe */
+	                position:absolute;
+	                top:0;
+	                left:0;
+	                padding:0.1em 0.2em;
+	                background:@white;
+	                .border-radius( 0 0 4px 0 );
+	                .transition( all @onhovertrans );
+	                font-family:'icomoon';
+	                color:@blue;
+	            }
+	        }
+	    }
+	}
+/*
             .thumbcaption {
                 position:relative;
                 .caption {
@@ -58,54 +87,11 @@
                     }
                 }
             }
-        }
-    }
+*/
 
     @onhovertrans: 0.3s;
 
-    .imglink {
-        display:inline-block;
-        max-width:100%;
-        .transition( all @onhovertrans );
-        .transform( scale(0.95) );
-        text-align:center;
-        img {
-            border:solid 5px @white;
-            .greyscale( 50% );
-            .border-box();
-            .box-shadow( 0px 0px 6px rgba(0,0,0,0.2) );
-            .transition( all @onhovertrans );
-            cursor:pointer;
-        }
 
-        &:hover {
-            .transform( scale(1) );
-            img {
-                .greyscale( 0% );
-                .box-shadow( 0px 0px 6px rgba(0,0,0,0.5) );
-            }
-            &.hasmap {
-                &:after {
-                    color:@red;
-                }
-            }
-        }
-        &.hasmap {
-            position:relative;
-            &:after {
-                content: "\f0ac"; /* icon-globe */
-                position:absolute;
-                top:0;
-                left:0;
-                padding:0.1em 0.2em;
-                background:@white;
-                .border-radius( 0 0 4px 0 );
-                .transition( all @onhovertrans );
-                font-family:'icomoon';
-                color:@blue;
-            }
-        }
-    }
 
 
     .mapwrapper {
@@ -422,3 +408,74 @@
             .transform( rotate(360deg) );
         }
     }
+
+@media (max-width:@tabletWidth){
+
+}
+
+@media (max-width:@mobileWidth){
+    .page {
+        .albumitem {
+            .thumbcaption {
+                .caption {
+                    position:relative;
+                    width:auto;
+                    height:auto;
+                    overflow:visible;
+                    &:after {
+                        display:none;
+                    }
+                }
+            }
+        }
+    }
+
+    .imglink {
+        .transform( scale(1) );
+        img {
+            .greyscale( 0% );
+            .box-shadow( 0px 0px 6px rgba(0,0,0,0.5) );
+        }
+    }
+
+    .mapwrapper {
+        &.mapstate1 {
+            width:0;
+
+            .map-refresh {
+                display:none;
+            }
+        }
+        
+        .map-toggle,
+        .map-refresh {
+            font-size:130%;
+        }
+        
+        .map-toggle.max {
+            &:before {
+                content: "\f0ac"; /* globe */
+            }
+        }
+        
+    }
+    
+    .albumnav {
+        width:100%;
+        max-width:none;
+        .border-radius( 0 );
+        text-align:center;
+        .nav {
+            float:none;
+            display:inline-block;
+        }
+    }
+
+    .albumwrapper {
+        .caption {
+            padding:1em;
+            bottom:2.5em;
+            text-align:center;
+        }
+    }
+}

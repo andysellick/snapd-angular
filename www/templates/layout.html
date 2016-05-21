@@ -4,21 +4,16 @@
     <div class="jsshow">
         <div ng-show="currentview == 'home'" class="grid page">
             <div ng-repeat="item in albums" class="col albumitem">
-                <div class="row">
-                    <div class="span5 align-center">
-                        <div class="imglink" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" ng-class="{hasmap: item.hasmap == 1}">
-                            <img src="/snapd/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.thumb }}" />
-                        </div>
-                        <p class="links">
-                            <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="faux_link" title="Album"><i class="icon-camera"></i></span>
-                            <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)" class="faux_link" title="Thumbs"><i class="icon-th-large"></i></span>
-                        </p>
-                    </div>
-                    <div class="span7 align-center-mobile">
-                        <h2 class="title">{{ item.name }}</h2>
-                        <p class="meta">{{ item.date }}, {{ item.count }} photos</p>
-                        <p class="caption">{{ item.intro }}</p>
-                    </div>
+                <div class="imglink" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" ng-class="{hasmap: item.hasmap == 1}" style="background-image:url('/snapd/public/img/thumbs/{{ item.thumb }}');">
+                	<div class="inner">
+	                    <h2 class="title">{{ item.name }}</h2>
+	                    <p class="meta">{{ item.date }}, {{ item.count }} photos</p>
+	                    <p class="caption">{{ item.intro }}</p>
+	                    <p class="links">
+	                        <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="faux_link" title="Album"><i class="icon-camera"></i></span>
+	                        <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)" class="faux_link" title="Thumbs"><i class="icon-th-large"></i></span>
+	                    </p>
+	                </div>
                 </div>
             </div>
         </div>

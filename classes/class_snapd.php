@@ -8,8 +8,8 @@ class cdHandler extends xmlStuff {
     var $picdir = 'public/img/pics/';
     var $thumbnaildir = 'public/img/thumbs/';
     var $quality = 80;
-    var $thumbwidth = 150;
-    var $thumbheight = 150;
+    var $thumbwidth = 300;
+    var $thumbheight = 300;
     /*
     var $path;
     var $currentpath;
@@ -109,8 +109,8 @@ class cdHandler extends xmlStuff {
 			$outer_width = intval($img_width / $scale);
 			$outer_height = intval($img_height / $scale);
 
-			$outer_width = 150;
-			$outer_height = 150; //FIXME is this hardcoding the thumb size instead of using all the stuff above it??
+			$outer_width = 300;
+			$outer_height = 300; //FIXME is this hardcoding the thumb size instead of using all the stuff above it??
 
 			$url = "http://$actualdomain$actualurl/makeImage.php?img=$filename&quality=$this->quality&width=$outer_width&height=$outer_height&thumb=1";
 			$content = file_get_contents($url);

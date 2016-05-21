@@ -15,6 +15,9 @@
     @red: #c12e2e;
     @green: #88cb76;
 
+	/* responsive */
+	@tabletWidth: 767px;
+	@mobileWidth: 420px;
 
     /* forms */
 
@@ -24,13 +27,3 @@
     @formElementSpacing: 5px; //spacing beneath input
     @helpWidth: @inputWidth;
 
-    /* grid */
-
-    @gridWidth: 1024px; //set to maximum page width required
-    @gridSpacing: 30; //spacing between columns required
-    @numCols: 12; //number of columns required
-    @fixedspacing: 20px; //used for fixed spacing grid
-
-    @percentColGutter: percentage(@gridSpacing / @gridWidth);
-    @percentColWidth: percentage(((@gridWidth - (@gridSpacing * (@numCols - 1))) / @numCols) / @gridWidth);
-    @fixedColWidth: percentage((@gridWidth / @numCols) / @gridWidth);

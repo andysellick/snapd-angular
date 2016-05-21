@@ -3,24 +3,16 @@
 {% block albumlist %}
     <div class="grid page">
         {% for listAlbums %}
-            <div class="col">
-                <div class="row">
-                    <div class="span5">
-                        <a href="[[ albumlink ]]" data-loadalbum="[[ albumlinkaj ]]">
+			<a href="[[ albumlink ]]" data-loadalbum="[[ albumlinkaj ]]" class="col">
                             <img src="public/img/thumbs/[[ thumb ]]" alt="[[ thumb ]]"/>
-                        </a>
-                    </div>
-                    <div class="span7">
-                        <h2>[[ name ]]</h2>
-                        <h3>[[ date ]]</h3>
-                        <p>[[ intro ]]</p>
-                        <p>
-                            <a href="[[ albumlink ]]" data-loadalbum="[[ albumlinkaj ]]"><i class="icon-camera"></i> Album</a>
-                            <a href="[[ thumbslink ]]" data-loadalbum="[[ thumbslinkaj ]]"><i class="icon-th-large"></i> Thumbs</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+                <h2>[[ name ]]</h2>
+                <h3>[[ date ]]</h3>
+                <p>[[ intro ]]</p>
+                <p>
+                    <a href="[[ albumlink ]]" data-loadalbum="[[ albumlinkaj ]]"><i class="icon-camera"></i> Album</a>
+                    <a href="[[ thumbslink ]]" data-loadalbum="[[ thumbslinkaj ]]"><i class="icon-th-large"></i> Thumbs</a>
+                </p>
+            </a>
         {% endfor %}
     </div>
 {% endblock albumlist %}
