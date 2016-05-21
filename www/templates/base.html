@@ -10,9 +10,9 @@
     <meta name="Description" content="{% block metadesc %}{% endblock metadesc %}">
 
     {% block css %}
-    <link rel="stylesheet" type="text/css" href="/snapd-angular/public/css/fonts/icons/style.css"/>
-    <link rel="stylesheet" type="text/css" href="/snapd-angular/public/css/styles.css"/>
-    <link rel="stylesheet" media="screen and (min-width:0) and (max-width:767px)" href="/snapd-angular/public/css/styles-responsive.css"/>
+    <link rel="stylesheet" type="text/css" href="public/css/fonts/icons/style.css"/>
+    <link rel="stylesheet" type="text/css" href="public/css/styles.css"/>
+    <link rel="stylesheet" media="screen and (min-width:0) and (max-width:767px)" href="public/css/styles-responsive.css"/>
     <!--[if lt IE 8 ]>
         <link rel="stylesheet" type="text/css" href="/public/css/styles-responsive.css"/>
     <![endif]-->
@@ -33,15 +33,15 @@
         document.getElementById("site").className = document.getElementById("site").className.replace(/nojs/i,'');
     </script>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="/snapd-angular/public/js/angular.min.js"></script>
-    <script src="/snapd-angular/public/js/snapd.js"></script>
+    <script src="public/js/angular.min.js"></script>
+    <script src="public/js/snapd.js"></script>
 </head>
 
 <body>
 <div id="sitecontent" ng-app="snapd" ng-controller="snapdc as s">
     {% block header %}
         <header class="header" ng-click="getAlbumList()">
-            <h1><a href="/snapd-angular" data-home class="jshide">snapd</a> <span class="jsshow">snapd</span></h1>
+            <h1><a href="/snapd" data-home class="jshide">snapd</a> <span class="jsshow">snapd</span></h1>
         </header>
     {% endblock header %}
 

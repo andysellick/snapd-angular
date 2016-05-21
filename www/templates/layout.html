@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="span5 align-center">
                         <div class="imglink" ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" ng-class="{hasmap: item.hasmap == 1}">
-                            <img src="/snapd-angular/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.thumb }}" />
+                            <img src="/snapd/public/img/thumbs/{{ item.thumb }}" alt="IMG {{ item.thumb }}" />
                         </div>
                         <p class="links">
                             <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="faux_link" title="Album"><i class="icon-camera"></i></span>
@@ -43,7 +43,7 @@
             </nav>
             <div ng-repeat="item in album" class="albumwrapper" ng-class="{selected: currentpic == item.picid}"> <!-- ng-show="currentpic == item.picid" -->
                 <div class="imagewrapper clearfix">
-                    <img src="/snapd-angular/makeImage.php?img=public/img/pics/{{ item.pic }}&quality=80&width={{ albumpicwidth }}&height={{ albumpicheight }}" alt=""/>
+                    <img src="/snapd/makeImage.php?img=public/img/pics/{{ item.pic }}&quality=80&width={{ albumpicwidth }}&height={{ albumpicheight }}" alt=""/>
                 </div>
                 <div class="caption">{{ item.desc }}</div>
             </div>

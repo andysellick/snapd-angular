@@ -12,7 +12,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     //aspects of the url, used for ajax requests and url manipulation
     //FIXME might not need all of these eventually
     $scope.url_base = window.location['protocol'] + '//' + window.location['host'];
-    $scope.url_sitepath = '/snapd-angular'; //FIXME
+    $scope.url_sitepath = '/snapd'; //FIXME
     $scope.url_fullpath = $scope.url_base + $scope.url_sitepath;
     $scope.url_mediapath = $scope.url_fullpath + '/public/img/';
 

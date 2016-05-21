@@ -3,7 +3,7 @@
 
 class cdHandler extends xmlStuff {
     var $command;
-    var $sitepath = '/snapd-angular'; //FIXME
+    var $sitepath = '/snapd'; //FIXME
     var $showall;
     var $picdir = 'public/img/pics/';
     var $thumbnaildir = 'public/img/thumbs/';
