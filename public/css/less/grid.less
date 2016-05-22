@@ -161,9 +161,11 @@
         .clearfix;
         .col {
             float:left;
-            width:100% / 3;
+            width:(100% - 2%) / 3;
+            margin-left:1%;
 
             &:nth-child(3n + 1){
+				margin-left:0;
                 clear:left;
             }
         }
