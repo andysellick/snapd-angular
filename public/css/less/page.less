@@ -1,15 +1,11 @@
 /* --page */
     /* this file should contain html and body styles, and any other styles that relate to the general wrapping of every page e.g. a pagewrapping element */
 
-    html {
-        //min-height:100%;
-    }
-
     body {
         font-family:Arial, Verdana, sans-serif;
         font-size: 100%;
         color:#333333;
-        background:@greyLight;
+        background:@grey;
     }
 
     .page {
@@ -21,30 +17,42 @@
 		margin-bottom:10px;
 	    .imglink {
 			.aspect(55%);
-			background-repeat:no-repeat;
-			background-position:50% 0;
-			background-size:cover;
-	        .transition( all @onhovertrans );
 	        text-align:center;
-	        
+
 	        .inner {
-				//.horizontal-gradient( transparent, 0%, rgba(255,255,255,0.9), 50% )
+				overflow:hidden;
+				background:@orange;
+		        .bg {
+					position:absolute;
+					top:0;
+					left:0;
+					width:100%;
+			        .transition( all @transpeed );
+				}
+		        .title {
+					.transparency(1);
+			        .transition( all @transpeed );
+				}
+				.content {
+					color:@white;
+					.transparency(0);
+			        .transition( all @transpeed );
+				}
+				&:hover {
+					.bg {
+						.transparency(0.5);
+						.greyscale( 100% );
+					}
+			        .title {
+						.transparency(0);
+					}
+					.content {
+						.transparency(1);
+					}
+				}
 			}
-	
-	        img {
-	            border:solid 5px @white;
-	            .greyscale( 50% );
-	            .border-box();
-	            .box-shadow( 0px 0px 6px rgba(0,0,0,0.2) );
-	            .transition( all @onhovertrans );
-	            cursor:pointer;
-	        }
-	
+
 	        &:hover {
-	            img {
-	                .greyscale( 0% );
-	                .box-shadow( 0px 0px 6px rgba(0,0,0,0.5) );
-	            }
 	            &.hasmap {
 	                &:after {
 	                    color:@red;
@@ -61,7 +69,7 @@
 	                padding:0.1em 0.2em;
 	                background:@white;
 	                .border-radius( 0 0 4px 0 );
-	                .transition( all @onhovertrans );
+	                .transition( all @transpeed );
 	                font-family:'icomoon';
 	                color:@blue;
 	            }
@@ -92,7 +100,6 @@
             }
 */
 
-    @onhovertrans: 0.3s;
 
 
 
@@ -317,7 +324,7 @@
             border-top:solid 1px rgb(63,63,63);
             .border-box();
             .box-shadow( 0 1px 0 rgba(255,255,255,0.3) inset );
-            .transition( all @onhovertrans );
+            .transition( all @transpeed );
             background:rgba(63,63,63,0.7);
             text-shadow:1px 1px 0 #000000;
             color:#FFFFFF;
