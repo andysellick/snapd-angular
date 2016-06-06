@@ -42,6 +42,13 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
             $scope.getAlbumList(); //we're on the homepage, init
         }
     }
+    
+    $scope.doMasonry = function(){
+        console.log('doMasonry');
+		var msnry = new Masonry('.grid',{
+			itemSelector: '.col'
+		});
+	}
 
     //retrieve JSON list of all albums via ajax (on homepage load)
     $scope.getAlbumList = function(event){
@@ -60,6 +67,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
                 $scope.currentview = 'home';
                 $scope.updatePageURL($scope.url_sitepath);
                 $scope.loading = '';
+                $timeout($scope.doMasonry,0);
             });
             rp.error(function(data, status, headers, config) {
                 alert("AJAX failed!");
@@ -363,3 +371,4 @@ Array.prototype.clean = function(deleteValue) {
   }
   return this;
 };
+

@@ -7,14 +7,14 @@
                 <div class="imglink" ng-class="{hasmap: item.hasmap == 1}">
                 	<div class="inner">
                 		<img src="/snapd/public/img/thumbs/{{ item.thumb }}" alt="" class="bg"/>
-	                	<div class="title vertalign">{{ item.name }}</div>
-		                <div class="content vertalign">
+	                	<div class="title"><div class="titletext">{{ item.name }}</div></div>
+		                <div class="content">
 		                    <p class="meta">{{ item.date }}, {{ item.count }} photos</p>
 		                    <p class="caption">{{ item.intro }}</p>
-		                    <p class="links">
+		                    <div class="links">
 		                        <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="btn" title="Album">View album</span>
 		                        <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)" class="btn" title="Thumbs">View thumbs</span>
-		                    </p>
+		                    </div>
 		                </div>
 		            </div>
                 </div>
