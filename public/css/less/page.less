@@ -34,15 +34,17 @@
 					left:0;
 					width:100%;
 					height:100%;
-					.box-shadow( 0 0 4px 2px rgba(0, 0, 0, 0.1) inset );
+					.border-box();
+					border:solid 1px @white;
 					.titletext {
 						.vertalign();
 						.transparency(1);
 				        .transition( all @transpeed );
 				        .font-curvy();
 				        color:@white;
-				        text-shadow:0 0 5px rgba(0,0,0,0.7);
-				        font-size:200%;
+				        text-shadow:0 0 3px rgba(0,0,0,0.5), 0 0 5px rgba(0,0,0,0.5);
+				        font-size:190%;
+				        font-weight:bold;
 					}
 				}
 				.content {
@@ -51,6 +53,8 @@
 					color:@white;
 					.transparency(0);
 			        .transition( all @transpeed );
+					.border-box();
+					border:solid 1px @white;
 				}
 				&:hover {
 					.bg {
