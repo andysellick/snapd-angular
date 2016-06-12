@@ -73,7 +73,8 @@
 	        &:hover {
 	            &.hasmap {
 	                &:after {
-	                    color:@red;
+	                    //color:@red;
+	                    background:none;
 	                }
 	            }
 	        }
@@ -81,14 +82,15 @@
 	            &:after {
 	                content: "\f0ac"; /* icon-globe */
 	                position:absolute;
-	                top:0;
-	                left:0;
+	                top:1px;
+	                right:1px;
 	                padding:0.1em 0.2em;
-	                background:@white;
-	                .border-radius( 0 0 4px 0 );
+	                background:rgba(0,0,0,0.2);
+	                .border-radius( 0 0 0 3px );
 	                .transition( all @transpeed );
 	                font-family:'icomoon';
 	                color:@blue;
+	                color:@white;
 	            }
 	        }
 	    }
@@ -338,9 +340,9 @@
             width:100%;
             padding:1em;
             padding-right:35%;
-            border-top:solid 1px rgb(63,63,63);
+            border-top:solid 1px rgb(0,0,0,1);
             .border-box();
-            .box-shadow( 0 1px 0 rgba(255,255,255,0.3) inset );
+            .box-shadow( 0 -2px 3px rgba(0,0,0,0.2) );
             .transition( all @transpeed );
             background:rgba(63,63,63,0.7);
             text-shadow:1px 1px 0 #000000;
