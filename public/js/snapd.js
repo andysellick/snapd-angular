@@ -44,7 +44,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     }
     
     $scope.doMasonry = function(){
-        console.log('doMasonry');
+        //console.log('doMasonry');
 		var msnry = new Masonry('.grid',{
 			itemSelector: '.col'
 		});
