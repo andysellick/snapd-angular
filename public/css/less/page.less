@@ -127,7 +127,7 @@
         position:absolute;
         top:0;
         right:0;
-        z-index:200;
+        z-index:500;
         .transition( all 0.5s );
 
         .map-toggle {
@@ -141,7 +141,7 @@
                 font-size:130%;
                 line-height:1.5em;
                 color:orange;
-                text-shadow:1px 1px 1px #000;
+                text-shadow:0 1px 1px rgba(0, 0, 0, 0.5);
                 .transition( all 0.3s );
             }
             &:hover {
@@ -156,7 +156,7 @@
                 left:0;
                 &:before {
                     content: "\f054"; /* chevron right */
-                    .border-radius( 0 4px 4px 0 );
+                    .border-radius( 0 0 4px 0 );
                 }
             }
             &.norm {
@@ -172,7 +172,7 @@
                 right:100%;
                 &:before {
                     content: "\f053"; /* chevron left */
-                    .border-radius( 4px 0 0 4px );
+                    .border-radius( 0 0 0 4px );
                 }
             }
         }
@@ -190,7 +190,7 @@
                 font-size:130%;
                 line-height:1.5em;
                 color:orange;
-                text-shadow:1px 1px 1px #000;
+                text-shadow:0 1px 1px rgba(0, 0, 0, 0.5);
                 .border-radius( 0 0 0 4px );
                 .transition( all 0.3s );
             }
@@ -209,6 +209,7 @@
             border-top:0;
             border-right:0;
             .border-radius( 0 0 0 4px );
+            .box-shadow( 0 0 5px rgba(0,0,0,0.3) );
         }
 
         &.mapstate0 { /* map is completely hidden */
@@ -257,11 +258,11 @@
         right:0;
         max-width:35%;
         .border-box();
-        .box-shadow( 2px 2px 4px rgba(0,0,0,0.5) inset );
-        .border-radius( 4px 0 0 0 );
-        background:#424242;
+        //.box-shadow( 2px 2px 4px rgba(0,0,0,0.5) inset );
+        //.border-radius( 4px 0 0 0 );
+        //background:#424242;
         color:#FFFFFF;
-        text-shadow:1px 1px 1px #000;
+        text-shadow:0 1px 1px rgba(0, 0, 0, 0.5);
         .nav {
             float:left;
             padding:0.5em;
@@ -309,11 +310,11 @@
     .albumwrapper {
         position:absolute;
         z-index:-1;
-        display:table;
         top:0;
         left:-100%;
         width:100%;
         height:100%;
+		overflow:hidden;
         background:#FFFFFF;
         .transition( all 1s );
 
@@ -323,6 +324,11 @@
                 left:100%;
             }
         }
+
+        .albuminner {
+	        display:table;
+	        width:100%;
+		}
 
         .imagewrapper {
             display:table-cell;
@@ -338,15 +344,16 @@
             bottom:0;
             left:0;
             width:100%;
-            padding:1em;
+            padding:0.7em;
             padding-right:35%;
             border-top:solid 1px rgb(0,0,0,1);
             .border-box();
-            .box-shadow( 0 -2px 3px rgba(0,0,0,0.2) );
+            .box-shadow( ~"0 0 5px rgba(0,0,0,0.5), 0 10px 30px -10px rgba(255, 255, 255, 0.2) inset" );
             .transition( all @transpeed );
             background:rgba(63,63,63,0.7);
-            text-shadow:1px 1px 0 #000000;
+            text-shadow:0 1px 1px rgba(0, 0, 0, 0.5);
             color:#FFFFFF;
+            line-height:1.4em;
         }
     }
     
