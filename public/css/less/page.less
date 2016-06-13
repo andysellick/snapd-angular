@@ -73,7 +73,6 @@
 	        &:hover {
 	            &.hasmap {
 	                &:after {
-	                    //color:@red;
 	                    background:none;
 	                }
 	            }
@@ -140,14 +139,14 @@
                 font-family:icomoon;
                 font-size:130%;
                 line-height:1.5em;
-                color:orange;
+                color:@orange;
                 text-shadow:0 1px 1px rgba(0, 0, 0, 0.5);
                 .transition( all 0.3s );
             }
             &:hover {
                 &:before {
                     background:rgba(63,63,63,0.6);
-                    color:#FFFFFF;
+                    color:@red;
                 }
             }
 
@@ -189,7 +188,7 @@
                 font-family:icomoon;
                 font-size:130%;
                 line-height:1.5em;
-                color:orange;
+                color:@orange;
                 text-shadow:0 1px 1px rgba(0, 0, 0, 0.5);
                 .border-radius( 0 0 0 4px );
                 .transition( all 0.3s );
@@ -197,7 +196,7 @@
             &:hover {
                 &:before {
                     background:rgba(63,63,63,0.6);
-                    color:#FFFFFF;
+                    color:@red;
                 }
             }
 
@@ -208,7 +207,6 @@
             border:solid 1px #000;
             border-top:0;
             border-right:0;
-            .border-radius( 0 0 0 4px );
             .box-shadow( 0 0 5px rgba(0,0,0,0.3) );
         }
 
@@ -258,9 +256,6 @@
         right:0;
         max-width:35%;
         .border-box();
-        //.box-shadow( 2px 2px 4px rgba(0,0,0,0.5) inset );
-        //.border-radius( 4px 0 0 0 );
-        //background:#424242;
         color:#FFFFFF;
         text-shadow:0 1px 1px rgba(0, 0, 0, 0.5);
         .nav {
@@ -270,7 +265,7 @@
             font-size:120%;
             line-height:1em;
             &:hover {
-                color:#FFFFFF;
+                //color:#FFFFFF;
             }
         }
         .progress {
