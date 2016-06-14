@@ -94,32 +94,38 @@
 	        }
 	    }
 	}
-/*
-            .thumbcaption {
-                position:relative;
-                .caption {
-                    position:absolute;
-                    top:0;
-                    right:0;
-                    width:57%;
-                    height:100%;
-                    padding:0;
-                    overflow:hidden;
-                    &:after {
-                        content:"";
-                        position:absolute;
-                        bottom:0;
-                        left:0;
-                        width:100%;
-                        height:50px;
-                        .vertical-gradient( transparent, 0%, @greyLight, 100% );
-                    }
-                }
-            }
-*/
 
-
-
+	.thumbnail {
+		position:relative;
+		cursor:pointer;
+		.img {
+			display:block;
+		}
+		.captionwrapper {
+			position:absolute;
+			top:0;
+			left:0;
+			width:100%;
+			height:100%;
+			padding:1em;
+			.border-box();
+			background:rgba(243,134,48,0.8);
+			.transparency(0);
+			.transition( all @transpeed );
+			overflow:hidden;
+			.caption {
+				.vertalign();
+				text-align:center;
+				color:@white;
+				text-overflow:ellipsis;
+			}
+		}
+		&:hover {
+			.captionwrapper {
+				.transparency(1);
+			}
+		}
+	}
 
 
     .mapwrapper {
