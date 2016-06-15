@@ -187,10 +187,23 @@
 			}
 		}
 	}
-	
+
 }
 
 @media (max-width:@mobileWidth){
+	.grid {
+		.col {
+			width:100% / 2;
+		}
+		
+		&.fivecols {
+			.col {
+				width:100% / 3;
+			}
+		}
+	}
+
+
     .row,
     .row.fixedspacing {
         [class*="span"] {
@@ -258,4 +271,18 @@
         }
     }
 
+}
+
+@media (max-width:@smallWidth){
+	.grid {
+		.col {
+			width:100%;
+		}
+
+		&.fivecols {
+			.col {
+				width:100% / 2;
+			}
+		}
+	}
 }
