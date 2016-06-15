@@ -1,6 +1,6 @@
 /* --buttons */
     /* button variables */
-    @btnhorzpadding: 0.5em; /* left and right padding for buttons */
+    @btnhorzpadding: 1em; /* left and right padding for buttons */
     @btnfontsize: 1em; /* button font size */
     @btnlineheight: 1.7em; /* used to control the vertical padding of buttons, should therefore be larger than btnfontsize */
 
@@ -18,13 +18,16 @@
         display:inline-block;
         padding:0 @btnhorzpadding;
         line-height:@btnlineheight;
-        margin:0;
+        margin:0 0 0.5em 0;
         .border-box();
         border:0;
-        background:#DDD;
-        color:#666;
+        background:darken(@blueDull, 20%);
+        color:@white;
         outline:0;
         cursor:pointer;
+        .border-radius( 5px );
+        .box-shadow( 0 4px 0 darken(@blueDull, 30%) );
+        .transition( all @transpeed );
         text-align:center;
         text-decoration:none;
         font-size:@btnfontsize;
@@ -44,6 +47,8 @@
 
         &:hover {
             text-decoration:none;
+            background:darken(@blueDull, 10%);
+			.box-shadow( 0 4px 0 darken(@blueDull, 20%) );
         }
         &.btn-block {
             display:block;

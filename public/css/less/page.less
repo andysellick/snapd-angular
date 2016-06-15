@@ -20,7 +20,9 @@
 	        text-align:center;
 
 	        .inner {
-				background:@red;
+				background-position:50% 0;
+				background-repeat:no-repeat;
+				background-size:cover;
 		        .bg {
 					position:absolute;
 					top:0;
@@ -37,6 +39,7 @@
 					.border-box();
 					border:solid 1px @white;
 					.titletext {
+						padding:0 0.5em;
 						.vertalign();
 						.transparency(1);
 				        .transition( all @transpeed );
@@ -54,11 +57,15 @@
 					.transparency(0);
 			        .transition( all @transpeed );
 					.border-box();
+					background:rgba(243,134,48,0.8);
 					border:solid 1px @white;
+					.meta {
+						font-size:80%;
+					}
 				}
 				&:hover {
 					.bg {
-						.transparency(0.2);
+						//.transparency(0.2);
 						.greyscale( 100% );
 					}
 			        .title {
@@ -73,7 +80,8 @@
 	        &:hover {
 	            &.hasmap {
 	                &:after {
-	                    background:none;
+	                    color:@white;
+	                    text-shadow:none;
 	                }
 	            }
 	        }
@@ -84,12 +92,10 @@
 	                top:1px;
 	                right:1px;
 	                padding:0.1em 0.2em;
-	                background:rgba(0,0,0,0.2);
-	                .border-radius( 0 0 0 3px );
 	                .transition( all @transpeed );
 	                font-family:'icomoon';
-	                color:@blue;
-	                color:@white;
+	                color:rgba(0,0,0,0.3);
+	                text-shadow:0 0 2px rgba(255,255,255,0.8);
 	            }
 	        }
 	    }
