@@ -1,13 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-            <div class="mapwrapper mapstate{{ mapstate }}" ng-show="markers.length > 0">
-                <div class="map-toggle min" ng-click="toggleMap(0)" title="Hide map"></div>
-                <div class="map-toggle norm" ng-click="toggleMap(1)" title="Normal map"></div>
-                <div class="map-toggle max" ng-click="toggleMap(2)" title="Full map"></div>
-                <div class="map-refresh" ng-click="highlightMarker(1)" title="Reset map"></div>
-                <div id="map" class="map"></div>
-            </div>
 
     <div class="jsshow">
         <div ng-show="currentview == 'home'" class="grid page">
@@ -31,6 +24,13 @@
 
 
         <div ng-show="currentview == 'album'" class="album albumstate{{ albumClutter }}">
+            <div class="mapwrapper mapstate{{ mapstate }}" ng-show="markers.length > 0">
+                <div class="map-toggle min" ng-click="toggleMap(0)" title="Hide map"></div>
+                <div class="map-toggle norm" ng-click="toggleMap(1)" title="Normal map"></div>
+                <div class="map-toggle max" ng-click="toggleMap(2)" title="Full map"></div>
+                <div class="map-refresh" ng-click="highlightMarker(1)" title="Reset map"></div>
+                <div id="map" class="map"></div>
+            </div>
             <nav class="albumnav">
                 <span ng-show="albumClutter == 1" ng-show="currentpic > 0" ng-click="showPrev()" class="nav faux_link" title="Previous"><i class="icon-chevron-left"></i></span>
                 <span ng-show="albumClutter == 1" ng-show="currentpic < album.size" ng-click="showNext()" class="nav faux_link" title="Next"><i class="icon-chevron-right"></i></span>
