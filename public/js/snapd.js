@@ -21,7 +21,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.markers = [];
     $scope.infolinks = [];
     $scope.mapstate = 1;
-    $scope.infowindow = 0;//new google.maps.InfoWindow();
+    $scope.infowindow = new google.maps.InfoWindow();
     $scope.albumClutter = 1;
 
     //on page load figure out what the current url is and therefore what to show
@@ -106,7 +106,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     //generic function for changing view, consolidating due to map
     $scope.switchView = function(view){
         $scope.currentview = view;
-        //$scope.doMap(); //if we load thumbs first then go to album, map is initialised in a hidden state and therefore breaks
+        $scope.doMap(); //if we load thumbs first then go to album, map is initialised in a hidden state and therefore breaks
     }
 
     //show album, called on click of album link or clicking on thumbnail in thumbs view
@@ -128,7 +128,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.showPrev = function(apply){
         $scope.currentpic = Math.max($scope.currentpic - 1,0);
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
-        //$scope.highlightMarker(1);
+        $scope.highlightMarker(1);
         if(apply){
             $scope.$apply(); //needed to action keypress event for some reason, but causes problem on ng-click
         }
@@ -137,7 +137,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.showNext = function(apply){
         $scope.currentpic = Math.min($scope.currentpic + 1,$scope.album.size);
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
-        //$scope.highlightMarker(1);
+        $scope.highlightMarker(1);
         if(apply){
             $scope.$apply();
         }
@@ -201,8 +201,8 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.switchPic = function(pic){
         $scope.currentpic = pic;
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
-        //$scope.highlightMarker();
-        //$scope.toggleMap(1);
+        $scope.highlightMarker();
+        $scope.toggleMap(1);
     }
     
     //open current image at full size
@@ -299,11 +299,11 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     //show/hide map on click of element, triggered action mostly handled by CSS
     $scope.toggleMap = function(stat){
         $scope.mapstate = stat;
-        //$scope.highlightMarker(1);
+        $scope.highlightMarker(1);
         //setTimeout(function() {$scope.map.fitBounds(bounds);},1);
         $timeout(function(){
-            //google.maps.event.trigger($scope.map, "resize");
-            //$scope.highlightMarker(1);
+            google.maps.event.trigger($scope.map, "resize");
+            $scope.highlightMarker(1);
         },500); //FIXME do all the other settimeouts need to use $timeout??
         //FIXME this is getting close but needs to refit the map to bounds on resize
 
