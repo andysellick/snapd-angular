@@ -58,6 +58,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
             $scope.currentview = 'home';
             $scope.currentpic = 0;
             $scope.updatePageURL($scope.url_sitepath);
+            $timeout($scope.doMasonry,0);
         }
         else {
             var rp = $http.get($scope.url_fullpath + "/home-data");
