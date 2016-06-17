@@ -104,6 +104,7 @@
 	.thumbnail {
 		position:relative;
 		cursor:pointer;
+		border:solid 1px @white;
 		.img {
 			display:block;
 		}
@@ -123,7 +124,9 @@
 				.vertalign();
 				text-align:center;
 				color:@white;
-				text-overflow:ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 		}
 		&:hover {
@@ -359,7 +362,7 @@
             left:0;
             width:100%;
             padding:0.7em;
-            padding-right:35%;
+            padding-right:220px;
             border-top:solid 1px rgb(0,0,0,1);
             .border-box();
             .box-shadow( ~"0 0 5px rgba(0,0,0,0.5), 0 10px 30px -10px rgba(255, 255, 255, 0.2) inset" );
@@ -425,7 +428,7 @@
         &.on {
             display:block;
         }
-        &:before { 
+        &:before {
             content: "\e900"; /* icon-cog */
             position:absolute;
             top:50%;
@@ -460,10 +463,6 @@
     }
 
 @media (max-width:@tabletWidth){
-
-}
-
-@media (max-width:@mobileWidth){
     .page {
         .albumitem {
             .thumbcaption {
@@ -504,7 +503,7 @@
         
         .map-toggle.max {
             &:before {
-                content: "\f0ac"; /* globe */
+                content: "\e902"; /* world */
             }
         }
         
@@ -523,8 +522,8 @@
 
     .albumwrapper {
         .caption {
-            padding:1em;
-            bottom:2.5em;
+            padding:0.5em 1em;
+            padding-bottom:2.5em;
             text-align:center;
         }
     }
