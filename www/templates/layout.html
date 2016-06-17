@@ -32,13 +32,13 @@
                 <div id="map" class="map"></div>
             </div>
             <nav class="albumnav">
-                <span ng-show="albumClutter == 1" ng-show="currentpic > 0" ng-click="showPrev()" class="nav faux_link" title="Previous"><i class="icon-chevron-left"></i></span>
-                <span ng-show="albumClutter == 1" ng-show="currentpic < album.size" ng-click="showNext()" class="nav faux_link" title="Next"><i class="icon-chevron-right"></i></span>
-                <span ng-show="albumClutter == 1" ng-click="loadThumbs('',url_sitepath + '/thumbs' + album.link)" class="nav faux_link" title="Thumbs"><i class="icon-th-large"></i></span>
-                <span ng-show="albumClutter == 1" ng-click="viewFullSize()" class="nav faux_link" title="Full size"><i class="icon-search-plus"></i></span>
+                <span ng-show="albumClutter == 1" ng-show="currentpic > 0" ng-click="showPrev()" class="nav faux_link" title="Previous"><i class="icon-triangle-left"></i></span>
+                <span ng-show="albumClutter == 1" ng-show="currentpic < album.size" ng-click="showNext()" class="nav faux_link" title="Next"><i class="icon-triangle-right"></i></span>
+                <span ng-show="albumClutter == 1" ng-click="loadThumbs('',url_sitepath + '/thumbs' + album.link)" class="nav faux_link" title="Thumbs"><i class="icon-picture"></i></span>
+                <!-- <span ng-show="albumClutter == 1" ng-click="viewFullSize()" class="nav faux_link" title="Full size"><i class="icon-search"></i></span> -->
                 <span ng-show="albumClutter == 1" class="nav progress">{{ currentpic + 1 }} of {{ album.size + 1 }}</span>
-                <span ng-show="albumClutter == 1" ng-click="toggleAlbumClutter(0,0)" class="nav faux_link" title="Hide caption"><i class="icon-chevron-down"></i></span>
-                <span ng-show="albumClutter == 0" ng-click="toggleAlbumClutter(1,0)" class="nav faux_link" title="Show caption"><i class="icon-chevron-up"></i></span>
+                <span ng-show="albumClutter == 1" ng-click="toggleAlbumClutter(0,0)" class="nav faux_link" title="Hide caption"><i class="icon-triangle-down"></i></span>
+                <span ng-show="albumClutter == 0" ng-click="toggleAlbumClutter(1,0)" class="nav faux_link" title="Show caption"><i class="icon-triangle-up"></i></span>
             </nav>
             <div ng-repeat="item in album" class="albumwrapper" ng-class="{selected: currentpic == item.picid}"> <!-- ng-show="currentpic == item.picid" -->
             	<div class="albuminner">
