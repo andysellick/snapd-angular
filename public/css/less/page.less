@@ -94,8 +94,8 @@
 	                padding:0.1em 0.2em;
 	                .transition( all @transpeed );
 	                font-family:'icomoon';
-	                color:rgba(0,0,0,0.3);
-	                text-shadow:0 0 2px rgba(255,255,255,0.8);
+	                color:rgba(255,255,255,0.8);
+	                text-shadow:0 0 1px rgba(0,0,0,0.4);
 	            }
 	        }
 	    }
@@ -428,14 +428,16 @@
             display:block;
         }
         &:before {
-            content: "\e900"; /* icon-cog */
+            content: "";
             position:absolute;
             top:50%;
-            left:0;
-            width:100%;
-            text-align:center;
-            font-family:'icomoon';
-            font-size:400%;
+            left:50%;
+            width:70px;
+            height:70px;
+            margin:-35px 0 0 -35px;
+            background:url('../img/cog.svg') no-repeat 50% 50%;
+            background-size:cover;
+            .transparency( 0.6 );
             -webkit-animation: loadanim 2s linear infinite; /* Safari 4+ */
             -moz-animation:    loadanim 2s linear infinite; /* Fx 5+ */
             -o-animation:      loadanim 2s linear infinite; /* Opera 12+ */
