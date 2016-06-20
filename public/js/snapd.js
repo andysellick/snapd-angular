@@ -136,7 +136,6 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
     }
     //navigate to next picture
     $scope.showNext = function(apply){
-		console.log('next');
         $scope.currentpic = Math.min($scope.currentpic + 1,$scope.album.size);
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
         $scope.highlightMarker(1);
