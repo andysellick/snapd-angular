@@ -10,7 +10,7 @@
                 		<!-- <img src="/snapd/public/img/thumbs/{{ item.thumb }}" alt="" class="bg"/> -->
 	                	<div class="title"><div class="titletext">{{ item.name }}</div></div>
 		                <div class="content">
-		                    <p class="meta">{{ item.date }}, {{ item.count }} photos</p>
+		                    <p class="meta">{{ item.date }} | {{ item.count }} photos</p>
 		                    <p class="caption">{{ item.intro }}</p>
 		                    <div class="links">
 		                        <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="btn">Album</span>
@@ -23,7 +23,7 @@
         </div>
 
 
-        <div ng-show="currentview == 'album'" class="album albumstate{{ albumClutter }}">
+        <div id="albumview" ng-show="currentview == 'album'" class="album albumstate{{ albumClutter }}">
             <div class="mapwrapper mapstate{{ mapstate }}" ng-show="markers.length > 0">
                 <div class="map-toggle min" ng-click="toggleMap(0)" title="Hide map"></div>
                 <div class="map-toggle norm" ng-click="toggleMap(1)" title="Normal map"></div>
@@ -42,7 +42,7 @@
             </nav>
             <div ng-repeat="item in album" class="albumwrapper" ng-class="{selected: currentpic == item.picid}"> <!-- ng-show="currentpic == item.picid" -->
             	<div class="albuminner">
-	                <div class="imagewrapper clearfix">
+	                <div class="imagewrapper clearfix" ng-swipe-left="showNext()" ng-swipe-right="showPrev()">
 	                    <img src="/snapd/makeImage.php?img=public/img/pics/{{ item.pic }}&quality=80&width={{ albumpicwidth }}&height={{ albumpicheight }}" alt=""/>
 	                </div>
 	                <div class="caption">{{ item.desc }}</div>

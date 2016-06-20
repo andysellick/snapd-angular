@@ -50,7 +50,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="156.85937"
+     inkscape:cx="97.216513"
      inkscape:cy="50.044451"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -72,7 +72,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -81,19 +81,31 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-16.861572,-77.845992)">
-    <text
-       xml:space="preserve"
+    <g
+       transform="scale(1.0190559,0.98130043)"
        style="font-style:normal;font-weight:normal;font-size:121.26435852px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient4168);fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="17.918137"
-       y="172.13257"
-       id="text4150"
-       sodipodi:linespacing="125%"
-       transform="scale(1.0190559,0.98130043)"><tspan
-         sodipodi:role="line"
-         id="tspan4152"
-         x="17.918137"
-         y="172.13257"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Alba Matter';-inkscape-font-specification:'Alba Matter';fill:url(#linearGradient4168);fill-opacity:1">snapd</tspan></text>
+       id="text4150">
+      <path
+         d="m 63.877328,130.29636 q -2.061494,0 -3.516666,1.45518 -1.455172,1.45517 -1.455172,3.51666 -0.121265,15.52184 -0.363793,17.34081 -1.333908,9.09482 -7.397126,15.27931 -7.51839,7.63965 -18.553447,7.63965 -4.608046,0 -7.639655,-3.03161 -2.910344,-2.91034 -2.910344,-7.51839 0,-4.72931 3.031609,-7.63965 3.031609,-3.03161 7.760919,-3.03161 4.72931,0 4.72931,-4.97184 0,1.21264 0.121264,-3.7592 0,0 0,-3.63793 l 0,-6.66954 q 0,-11.15632 7.51839,-18.67471 7.51839,-7.51839 18.674711,-7.51839 4.608046,0 7.639655,3.03161 3.031609,2.91035 3.031609,7.51839 0,4.48678 -3.152873,7.63966 -3.031609,3.0316 -7.518391,3.0316 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Alba Matter';-inkscape-font-specification:'Alba Matter';fill:url(#linearGradient4168);fill-opacity:1"
+         id="path4147" />
+      <path
+         d="m 148.80027,199.29578 q -3.03161,3.03161 -7.63965,3.03161 l -0.48506,0 q -12.2477,0 -20.49367,-8.24597 -8.12472,-8.12471 -8.12472,-20.37241 l 0,-5.69943 -0.12126,-30.43735 q 0,-3.03161 -2.18276,-5.09311 -2.06149,-2.18276 -5.0931,-2.18276 -3.15288,0 -5.335634,2.0615 -2.061494,2.06149 -2.061494,5.21437 l 0,27.52701 q 0,4.60804 -3.031609,7.51839 -3.031609,3.0316 -7.639655,3.0316 -4.608046,0 -7.639655,-3.0316 -2.910344,-2.91035 -2.910344,-7.51839 l 0,-27.52701 q 0,-12.12644 8.245976,-20.25115 8.245977,-8.24598 20.372415,-8.24598 12.12643,0 20.37241,8.24598 8.24598,8.12471 8.24598,20.25115 l 0,36.13678 q 0,3.15287 2.06149,5.21436 2.18276,2.18276 5.33563,2.18276 l 0.48506,0 q 4.60804,0 7.63965,3.03161 3.03161,3.03161 3.03161,7.63965 0,4.60805 -3.03161,7.51839 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Alba Matter';-inkscape-font-specification:'Alba Matter';fill:url(#linearGradient4168);fill-opacity:1"
+         id="path4149" />
+      <path
+         d="m 198.80099,172.61763 q -3.03161,3.0316 -7.63966,3.0316 -4.60805,0 -7.63965,-3.0316 -2.91035,-2.91035 -2.91035,-7.51839 l 0,-22.67644 q 0,-5.0931 -3.63793,-8.60977 -3.51667,-3.51667 -8.60977,-3.51667 -5.0931,0 -8.60977,3.51667 -3.51666,3.51667 -3.51666,8.60977 0,5.0931 3.51666,8.73103 3.51667,3.51667 8.60977,3.51667 4.60805,0 7.63966,3.03161 3.0316,2.91034 3.0316,7.51839 0,4.60805 -3.0316,7.63965 -3.03161,3.03161 -7.63966,3.03161 -14.18793,0 -23.76781,-9.57988 -9.57989,-9.70115 -9.57989,-23.88908 0,-14.18793 9.57989,-23.76781 9.57988,-9.57989 23.76781,-9.57989 14.18793,0 23.76782,9.57989 9.70114,9.57988 9.70114,23.76781 l 0,22.67644 q 0,4.60804 -3.0316,7.51839 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Alba Matter';-inkscape-font-specification:'Alba Matter';fill:url(#linearGradient4168);fill-opacity:1"
+         id="path4151" />
+      <path
+         d="m 236.81167,175.89176 q -4.60804,0 -7.63965,-3.03161 -2.91034,-3.0316 -2.91034,-7.63965 0,-4.60805 2.91034,-7.51839 3.03161,-3.03161 7.63965,-3.03161 5.09311,0 8.60977,-3.51667 3.63794,-3.63793 3.63794,-8.73103 0,-5.0931 -3.63794,-8.60977 -3.51666,-3.51667 -8.60977,-3.51667 -5.0931,0 -8.60976,3.51667 -3.51667,3.51667 -3.51667,8.60977 l 0,47.41436 q 0,4.60805 -3.03161,7.63966 -3.03161,3.03161 -7.63965,3.03161 -4.60805,0 -7.63966,-3.03161 -2.91034,-3.03161 -2.91034,-7.63966 l 0,-47.41436 q 0,-14.18793 9.57988,-23.76781 9.57988,-9.57989 23.76781,-9.57989 14.18793,0 23.76782,9.57989 9.70115,9.57988 9.70115,23.76781 0,14.18793 -9.70115,23.88908 -9.57989,9.57988 -23.76782,9.57988 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Alba Matter';-inkscape-font-specification:'Alba Matter';fill:url(#linearGradient4168);fill-opacity:1"
+         id="path4153" />
+      <path
+         d="m 305.25972,175.64923 q -14.06667,0 -23.76782,-9.57988 -9.57988,-9.70115 -9.57988,-23.76781 0,-14.18793 9.57988,-23.76782 9.57989,-9.70115 23.76782,-9.70115 4.60804,0 7.63965,3.03161 3.03161,3.03161 3.03161,7.63966 0,4.60804 -3.03161,7.63965 -3.03161,2.91035 -7.63965,2.91035 -5.0931,0 -8.60977,3.63793 -3.51667,3.51666 -3.51667,8.60977 0,5.0931 3.51667,8.60977 3.51667,3.51666 8.60977,3.51666 5.0931,0 8.60977,-3.51666 3.63793,-3.51667 3.63793,-8.60977 l 0,-47.535632 q 0,-4.486782 3.03161,-7.518391 3.03161,-3.031609 7.51839,-3.031609 4.60804,0 7.63965,3.031609 3.03161,2.910345 3.03161,7.518391 l 0,47.535632 q 0,14.06666 -9.70115,23.76781 -9.70115,9.57988 -23.76781,9.57988 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Alba Matter';-inkscape-font-specification:'Alba Matter';fill:url(#linearGradient4168);fill-opacity:1"
+         id="path4155" />
+    </g>
     <g
        style="font-style:normal;font-weight:normal;font-size:116.16291046px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="text4136"

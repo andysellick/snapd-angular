@@ -1,5 +1,5 @@
 
-angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$timeout,$compile){
+angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$window,$timeout,$compile){
     $scope.albums = 0; //minimal details of all albums
     $scope.album = 0; //the album currently being viewed
     $scope.currentview = 'home'; //will either be 'home','album' or 'thumbs'
@@ -23,7 +23,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     $scope.mapstate = 1;
     $scope.infowindow = new google.maps.InfoWindow();
     $scope.albumClutter = 1;
-
+    
     //on page load figure out what the current url is and therefore what to show
     $scope.getCurrentLocation = function(){
         var here = window.location.href;
@@ -136,6 +136,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     }
     //navigate to next picture
     $scope.showNext = function(apply){
+		console.log('next');
         $scope.currentpic = Math.min($scope.currentpic + 1,$scope.album.size);
         $scope.updatePageURL($scope.url_sitepath + '/album' + $scope.album.link + $scope.currentpic); //FIXME
         $scope.highlightMarker(1);
@@ -324,7 +325,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
             $scope.setView(e.state.view,e.state.pic,e.state.album);
         }
     }
-    
+
     //handle key presses for next/prev navigation with cursor keys
     document.addEventListener('keydown', function(e){
         e = e || window.event;
@@ -345,7 +346,7 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
     });
 
     //be clever and apply a top/bottom margin to each image to centre it in the page and ensure the caption is always at the bottom
-    //this works on next/prev because images are already loaded but not on initial album load
+    //this works on next/prev because images are already loaded but not on init ial album load
     //...sooooo... yeah. I've done it in CSS instead. Works fine. Leaving this here for the moment for reference
     /*
     $scope.adjustImagePos = function(){
@@ -356,8 +357,6 @@ angular.module('snapd',[]).controller('snapdc',function($scope,$http,$window,$ti
         currimg.setAttribute('style','margin-top:' + cheight + "px;" + 'margin-bottom:' + cheight + "px");
     }
     */
-
-
     $scope.getAlbumPicSize();
     $scope.getCurrentLocation(); //on page load, check to see where we are
 });
