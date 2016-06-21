@@ -529,3 +529,36 @@
         }
     }
 }
+
+@media (max-width:@mobileWidth){
+	.albumitem {
+		.imglink {
+			border:solid 1px @white;
+			.inner {
+				.title {
+					position:relative;
+					border:0;
+					.transparency(1);
+					.vertical-gradient( transparent, 0%, rgba(243,134,48,0.3), 100% );
+					.titletext {
+						top:auto;
+						padding:1em;
+						.transform( none );
+					}
+				}
+				.content {
+					padding:0 1em 1em 1em;
+					.transparency(1);
+					border:0;
+					.vertical-gradient( rgba(243,134,48,0.3), 0%, rgba(243,134,48,1), 100% );
+				}
+
+				&:hover {
+					.title {
+						.transparency(1);
+					}
+				}
+			}
+		}
+	}
+}
