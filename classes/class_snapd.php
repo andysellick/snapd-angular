@@ -51,7 +51,7 @@ class cdHandler extends xmlStuff {
             }
 
             $loopvars = array('name' => (string)$xml["name"],
-                            'date' => self::parseFilenameAsDate((string)$file),
+                            'date' => self::parseFilenameAsDate((string)$file,4),
                             'intro' => (string)$xml["desc"],
                             'thumb' => $thumb,
                             'count' => $xml->pic->count(),

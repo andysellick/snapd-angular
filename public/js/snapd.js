@@ -117,6 +117,7 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
         $scope.updatePageURL(fakeurl);
         $scope.getAlbum(url,'album');
         $scope.currentpic = pic;
+        $scope.highlightMarker(1);
     }
 
     //show thumbs, called on click from main page
