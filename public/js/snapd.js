@@ -157,7 +157,8 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
     //resetmap flags whether we should move the map to show all markers - true when next/prev, not so elsewhere
     $scope.highlightMarker = function(resetmap){
         var curr = $scope.currentpic;
-        if(curr < $scope.album.size){
+        if(curr < $scope.album.size){ //fixme weird bug here - if we're on the last image in an album this doesn't work, but that's kind of what we want
+			//console.log('moo');
             var bounds = new google.maps.LatLngBounds(null);
             for(var i = 0; i < $scope.markers.length; i++){
                 if($scope.markers[i]){ //not all photos may have a marker, so check first
@@ -170,7 +171,11 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
                 }
             }
             if(resetmap){
-                setTimeout(function() {$scope.map.fitBounds(bounds);},1);
+                //setTimeout(function() {$scope.map.fitBounds(bounds);},1);
+                $timeout(function(){
+					$scope.map.fitBounds(bounds);
+		            //google.maps.event.trigger($scope.map, "resize");
+		        },500);
             }
             if($scope.markers[curr]){ //because photo may not have a position
                 $scope.markers[curr].setIcon($scope.url_mediapath + 'marker_current.png');
