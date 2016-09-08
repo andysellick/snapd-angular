@@ -1,10 +1,6 @@
 # ignore all php, images, and some of the data
 
-classes/class_error.php
-classes/class_files.php
-classes/class_templating.php
-classes/class_url.php
-classes/class_xml.php
+classes/
 
 public/img/pics/
 public/img/thumbs/
