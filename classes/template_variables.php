@@ -14,5 +14,7 @@
         'album' => array('showAThumbOrTwo'),
         'album-data' => array('showThumbsJSON'),
         'thumbs' => array('showAThumbOrTwo'),
+        'login' => array('authenticateUser'),
+        'logout' => array('logout')
     );
 ?>

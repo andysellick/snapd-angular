@@ -3,22 +3,34 @@
 {% block content %}
 
     <div class="jsshow">
-        <div ng-show="currentview == 'home'" class="grid page">
-            <div ng-repeat="item in albums" class="col albumitem">
-                <div class="imglink" ng-class="{hasmap: item.hasmap == 1}">
-                	<div class="inner" style="background-image:url('/snapd/public/img/thumbs/{{ item.thumb }}');">
-                		<!-- <img src="/snapd/public/img/thumbs/{{ item.thumb }}" alt="" class="bg"/> -->
-	                	<div class="title"><div class="titletext">{{ item.name }}</div></div>
-		                <div class="content">
-		                    <p class="caption">{{ item.intro }}</p>
-		                    <div class="links">
-		                        <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="btn">Album</span>
-		                        <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)" class="btn">Thumbnails</span>
-		                    </div>
-		                    <p class="meta">{{ item.date }} | {{ item.count }} photos</p>
-		                </div>
-		            </div>
+        <div ng-show="currentview == 'home'">
+            <div class="authenticate {{ loggedin }}">
+                <div class="login">
+                    <input type="text" id="username" placeholder="Username"/>
+                    <input type="password" id="password" placeholder="Password"/>
+                    <button type="submit" ng-click="login()"><i class="icon-unlock"></i></button>
                 </div>
+                <div class="logout">
+                    <button type="submit" ng-click="logout()"><i class="icon-lock"></i></button>
+                </div>
+            </div>
+            <div class="grid page">
+              <div ng-repeat="item in albums" class="col albumitem">
+                  <div class="imglink" ng-class="{hasmap: item.hasmap == 1}">
+                  	<div class="inner" style="background-image:url('/snapd/public/img/thumbs/{{ item.thumb }}');">
+                  		<!-- <img src="/snapd/public/img/thumbs/{{ item.thumb }}" alt="" class="bg"/> -->
+  	                	<div class="title"><div class="titletext">{{ item.name }}</div></div>
+  		                <div class="content">
+  		                    <p class="caption">{{ item.intro }}</p>
+  		                    <div class="links">
+  		                        <span ng-click="loadAlbum(item.albumlinkaj,item.albumlink)" class="btn">Album</span>
+  		                        <span ng-click="loadThumbs(item.thumbslinkaj,item.thumbslink)" class="btn">Thumbnails</span>
+  		                    </div>
+  		                    <p class="meta">{{ item.date }} | {{ item.count }} photos</p>
+  		                </div>
+  		            </div>
+                  </div>
+              </div>
             </div>
         </div>
 

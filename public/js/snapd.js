@@ -8,6 +8,7 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
     $scope.albumpicheight = 0;
     $scope.promise;
     $scope.loading;
+    $scope.loggedin = '';
 
     //aspects of the url, used for ajax requests and url manipulation
     //FIXME might not need all of these eventually
@@ -312,7 +313,54 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
             $scope.highlightMarker(1);
         },500); //FIXME do all the other settimeouts need to use $timeout??
         //FIXME this is getting close but needs to refit the map to bounds on resize
+    }
+    
+    $scope.login = function(){
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        if(username.length && password.length){
+            var postdata = {
+                            'username':username,
+                            'password':password
+            };
+            //console.log(username,password);
+            var rp = $http.post($scope.url_fullpath + "/login",postdata);
+            $scope.loading = 'on';
+            rp.success(function(data, status, headers, config) {
+                if(data.length){
+                    $scope.loggedin = 'loggedin';
+                    $scope.albums = data;
+                    $scope.currentview = 'home';
+                    $scope.updatePageURL($scope.url_sitepath);
+                    $scope.loading = '';
+                    $timeout($scope.doMasonry,0);
+                    //console.log(data);
+                }
+                else {
+                    $scope.loading = '';
+                }
+            });
+            rp.error(function(data, status, headers, config) {
+                alert("AJAX failed!");
+            });
+        }
+    }
 
+    $scope.logout = function(){
+        var rp = $http.get($scope.url_fullpath + "/logout");
+        $scope.loading = 'on';
+        rp.success(function(data, status, headers, config) {
+            $scope.loggedin = '';
+            $scope.albums = data;
+            $scope.currentview = 'home';
+            $scope.updatePageURL($scope.url_sitepath);
+            $scope.loading = '';
+            $timeout($scope.doMasonry,0);
+            //console.log(data);
+        });
+        rp.error(function(data, status, headers, config) {
+            alert("AJAX failed!");
+        });
     }
     
     //update size of album images if page is resized. Use timeout to give a slight delay

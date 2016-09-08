@@ -15,6 +15,7 @@ class cdHandler extends xmlStuff {
     var $currentpath;
     var $xmlpath;
     */
+    var $users = array('guest' => 'mallards');
 
     function __construct(){
         $arguments = func_get_args();
@@ -28,41 +29,82 @@ class cdHandler extends xmlStuff {
         echo "</pre>";
         */
     }
+    
+    function authenticateUser(){
+        $posts = $this->command[3];
+        if(count($posts)){
+            $user = $posts->username;
+            $pass = $posts->password;
+            if(array_key_exists($user,$this->users) && $this->users[$user] == $pass){ //credentials accepted
+                session_start();
+                $_SESSION['login'] = "1";
+                return $this->listAlbumsJSON();
+            }
+            else { //not valid login
+                session_start();
+                $_SESSION['login'] = '';
+                return '';
+            }
+
+        }
+        //return(json_encode($this->command));
+        //return(json_encode($posts));
+    }
+
+    function logout(){
+        session_start();
+        $_SESSION['login'] = '';
+        session_destroy();
+        return $this->listAlbumsJSON();
+    }
+    
+    function checkUserLogin(){
+        if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
+            return 0;
+        }
+        else {
+            return 1;
+        }
+    }
 
     //list all the albums on the homepage
     function listAlbums(){
+        //session_start();
         $return = array();
         $files = self::getFiles('www/xml/albums/','album');
         foreach($files as $key => $file){
             $xml = self::openXML($file);
-            //get album thumbnail or default to first
-            $thumb = (int)$xml["defaultthumb"];
-            if(!$thumb){
-                $thumb = 0;
+            $status = $xml['status'];
+            if($status != 'private' || $this->checkUserLogin()){
+              //get album thumbnail or default to first
+              $thumb = (int)$xml["defaultthumb"];
+              if(!$thumb){
+                  $thumb = 0;
+              }
+              $link = self::parseFilenameAsDate((string)$file);
+              $linkname = self::flattenTitleForLink((string)$xml["name"]);
+              $albumid = str_replace("/","-",$link);
+              $origpic = (string)$xml['albumdir'].'/'.(string)$xml->pic[$thumb]['file'];
+              $thumb = "album-".$albumid."_".$thumb.".jpg";
+              $hasmap = 0;
+              if($xml->pic['latlong']){
+                  $hasmap = 1;
+              }
+  
+              $loopvars = array('name' => (string)$xml["name"],
+                              'date' => self::parseFilenameAsDate((string)$file,4),
+                              'intro' => (string)$xml["desc"],
+                              'thumb' => $thumb,
+                              'count' => $xml->pic->count(),
+                              'thumbslink' => $this->sitepath.'/thumbs/'.$link.'/'.$linkname.'/',
+                              'thumbslinkaj' => '/album-data/'.$link.'/'.$linkname.'/',
+                              'albumlink' => $this->sitepath.'/album/'.$link.'/'.$linkname.'/0',
+                              'albumlinkaj' => '/album-data/'.$link.'/'.$linkname.'/0',
+                              'hasmap' => $hasmap
+                              );
+              self::generateThumb($thumb,$origpic);
+              array_push($return,$loopvars);
             }
-            $link = self::parseFilenameAsDate((string)$file);
-            $linkname = self::flattenTitleForLink((string)$xml["name"]);
-            $albumid = str_replace("/","-",$link);
-            $origpic = (string)$xml['albumdir'].'/'.(string)$xml->pic[$thumb]['file'];
-            $thumb = "album-".$albumid."_".$thumb.".jpg";
-            $hasmap = 0;
-            if($xml->pic['latlong']){
-                $hasmap = 1;
-            }
-
-            $loopvars = array('name' => (string)$xml["name"],
-                            'date' => self::parseFilenameAsDate((string)$file,4),
-                            'intro' => (string)$xml["desc"],
-                            'thumb' => $thumb,
-                            'count' => $xml->pic->count(),
-                            'thumbslink' => $this->sitepath.'/thumbs/'.$link.'/'.$linkname.'/',
-                            'thumbslinkaj' => '/album-data/'.$link.'/'.$linkname.'/',
-                            'albumlink' => $this->sitepath.'/album/'.$link.'/'.$linkname.'/0',
-                            'albumlinkaj' => '/album-data/'.$link.'/'.$linkname.'/0',
-                            'hasmap' => $hasmap
-                            );
-            self::generateThumb($thumb,$origpic);
-            array_push($return,$loopvars);
         }
         return $return;
     }
@@ -130,106 +172,109 @@ class cdHandler extends xmlStuff {
         $return = array();
         //generate the filename to match from the url, of the format yyyy-mm-dd and pad with zeros as necessary
         $command = $this->command[1];
-        $year = $command[1];
-        $month = $command[2];
-        $day = $command[3];
-
-        if($year && $month && $day){
-            $datestr = self::padDateWithZeros($year,$month,$day);
-            $datestr = "album-".$datestr[0].'-'.$datestr[1].'-'.$datestr[2];
-            $file = self::getFiles('www/xml/albums/',$datestr,$this->showall); //get the file
-            if($file){
-                $file = $file[0];
-                $xml = self::openXML($file);
-                $prevlink = '';
-                $nextlink = '';
-                $currlink = '/'.$command[1].'/'.$command[2].'/'.$command[3].'/'.$command[4].'/';
-                
-                //find out if a specific picture should be returned (no js) or return all (js via ajax)
-                $id = -1;
-                if($ajax){
-                    $id = -1;
-                }
-                else {
-                    if(strlen($command[5])){
-                        $id = (int)$command[5];
-                    }
-                }
-
-                //if no specific picture was requested in the url, return all pictures
-                if($id == -1){
-                    $counter = 0;
-                    foreach($xml->pic as $pic){
-                        /*
-                        $prevlink = '';
-                        $nextlink = '';
-                        if($id < count($xml->pic)){
-                            $nextlink = $currlink.($id + 1);
-                        }
-                        if($id > 0){
-                            $prevlink = $currlink.($id - 1);
-                        }
-                        */
-                        //construct the required thumbnail filename and the original picture filename
-                        //FIXME there's a bit of duplication here, we're doing something v similar in list albums
-                        $link = self::parseFilenameAsDate((string)$file);
-                        $albumid = str_replace("/","-",$link);
-                        $origpic = (string)$xml['albumdir'].'/'.(string)$xml->pic[$counter]['file'];
-                        $thumb = "album-".$albumid."_".$counter.".jpg";
-
-                        $thumbs = array(
-                            'desc' => (string)$pic['desc'],
-                            'thumb' => $this->sitepath.'/'.$this->thumbnaildir.$thumb,
-                            'pic' => $origpic,
-                            'picid' => $counter,
-                            //'prev' => $prevlink,
-                            //'next' => $nextlink, //fixme don't need these, surely?
-                            'link' => $this->sitepath.'/album'.$currlink,
-                            'latlong' => (string)$pic['latlong']
-                        );
-                        //print($thumb.' '.$origpic.'<br/>');
-                        self::generateThumb($thumb,$origpic);
-
-                        array_push($return,$thumbs);
-                        $counter += 1;
-                    }
-                    //for ajax, modify data output to give additional info. This isn't currently supported by the template engine,
-                    //but it's acceptable if we're just outputting it all as json that will then be processed by client side JS
-                    if($ajax){
-                        $return['size'] = count($return) - 1; //have to do this first before the following lines corrupt the data
-                        $return['title'] = (string)$xml['name'];
-                        $return['link'] = $currlink;
-                    }
-                }
-                //if the album url has a specific picture number, return that picture
-                else {
-                    $pic = $xml->pic[$id];
-                    if($id < count($xml->pic)){
-                        $nextlink = $this->sitepath.'/album'.$currlink.($id + 1);
-                    }
-                    if($id > 0){
-                        $prevlink = $this->sitepath.'/album'.$currlink.($id - 1);
-                    }
-                    $currpic = 0;
-                    if(count($command) > 4){
-                        $currpic = (int)$command[5];
-                    }
-                    $return = array(
-                        'desc' => (string)$pic['desc'],
-                        'pic' => $this->sitepath.'/public/img/pics/'.(string)$xml['albumdir'].'/'.(string)$pic['file'], //yeah this is a bit complex fixme
-                        'link' => $currlink,
-                        'linkaj' => $this->sitepath.'/album-data'.$currlink,
-                        'thumbslink' => $this->sitepath.'/thumbs'.$currlink,
-                        'currpic' => $currpic,
-                        'prev' => $prevlink,
-                        'next' => $nextlink
-                    );
-                    $return['title'] = (string)$xml['name'];
-                }
-                return $return;
-            }
-        }
-        return array("pic" => "<p>We couldn't find that picture. Perhaps go back to the homepage and try again?</p>");
+        if(count($command) >= 4){
+	        $year = $command[1];
+	        $month = $command[2];
+	        $day = $command[3];
+	
+	        if($year && $month && $day){
+	            $datestr = self::padDateWithZeros($year,$month,$day);
+	            $datestr = "album-".$datestr[0].'-'.$datestr[1].'-'.$datestr[2];
+	            $file = self::getFiles('www/xml/albums/',$datestr,$this->showall); //get the file
+	            if($file){
+	                $file = $file[0];
+	                $xml = self::openXML($file);
+	                $prevlink = '';
+	                $nextlink = '';
+	                $currlink = '/'.$command[1].'/'.$command[2].'/'.$command[3].'/'.$command[4].'/';
+	                
+	                //find out if a specific picture should be returned (no js) or return all (js via ajax)
+	                $id = -1;
+	                if($ajax){
+	                    $id = -1;
+	                }
+	                else {
+	                    if(strlen($command[5])){
+	                        $id = (int)$command[5];
+	                    }
+	                }
+	
+	                //if no specific picture was requested in the url, return all pictures
+	                if($id == -1){
+	                    $counter = 0;
+	                    foreach($xml->pic as $pic){
+	                        /*
+	                        $prevlink = '';
+	                        $nextlink = '';
+	                        if($id < count($xml->pic)){
+	                            $nextlink = $currlink.($id + 1);
+	                        }
+	                        if($id > 0){
+	                            $prevlink = $currlink.($id - 1);
+	                        }
+	                        */
+	                        //construct the required thumbnail filename and the original picture filename
+	                        //FIXME there's a bit of duplication here, we're doing something v similar in list albums
+	                        $link = self::parseFilenameAsDate((string)$file);
+	                        $albumid = str_replace("/","-",$link);
+	                        $origpic = (string)$xml['albumdir'].'/'.(string)$xml->pic[$counter]['file'];
+	                        $thumb = "album-".$albumid."_".$counter.".jpg";
+	
+	                        $thumbs = array(
+	                            'desc' => (string)$pic['desc'],
+	                            'thumb' => $this->sitepath.'/'.$this->thumbnaildir.$thumb,
+	                            'pic' => $origpic,
+	                            'picid' => $counter,
+	                            //'prev' => $prevlink,
+	                            //'next' => $nextlink, //fixme don't need these, surely?
+	                            'link' => $this->sitepath.'/album'.$currlink,
+	                            'latlong' => (string)$pic['latlong']
+	                        );
+	                        //print($thumb.' '.$origpic.'<br/>');
+	                        self::generateThumb($thumb,$origpic);
+	
+	                        array_push($return,$thumbs);
+	                        $counter += 1;
+	                    }
+	                    //for ajax, modify data output to give additional info. This isn't currently supported by the template engine,
+	                    //but it's acceptable if we're just outputting it all as json that will then be processed by client side JS
+	                    if($ajax){
+	                        $return['size'] = count($return) - 1; //have to do this first before the following lines corrupt the data
+	                        $return['title'] = (string)$xml['name'];
+	                        $return['link'] = $currlink;
+	                    }
+	                }
+	                //if the album url has a specific picture number, return that picture
+	                else {
+	                    $pic = $xml->pic[$id];
+	                    if($id < count($xml->pic)){
+	                        $nextlink = $this->sitepath.'/album'.$currlink.($id + 1);
+	                    }
+	                    if($id > 0){
+	                        $prevlink = $this->sitepath.'/album'.$currlink.($id - 1);
+	                    }
+	                    $currpic = 0;
+	                    if(count($command) > 4){
+	                        $currpic = (int)$command[5];
+	                    }
+	                    $return = array(
+	                        'desc' => (string)$pic['desc'],
+	                        'pic' => $this->sitepath.'/public/img/pics/'.(string)$xml['albumdir'].'/'.(string)$pic['file'], //yeah this is a bit complex fixme
+	                        'link' => $currlink,
+	                        'linkaj' => $this->sitepath.'/album-data'.$currlink,
+	                        'thumbslink' => $this->sitepath.'/thumbs'.$currlink,
+	                        'currpic' => $currpic,
+	                        'prev' => $prevlink,
+	                        'next' => $nextlink
+	                    );
+	                    $return['title'] = (string)$xml['name'];
+	                }
+	                return $return;
+	            }
+	        }
+		}
+        //return array("desc" => "<p>We couldn't find that picture. Perhaps go back to the homepage and try again?</p>");
+        return array();
     }
 
     function showThumbsJSON(){

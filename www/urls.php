@@ -16,6 +16,8 @@ $xmlstr = <<<XML
     <item url="album" path="" file="album.html"/>
     <item url="album-data" path="" file="album-data.html"/>
     <item url="thumbs" path="" file="thumbs.html"/>
+    <item url="login" path="" file="login.html"/>
+    <item url="logout" path="" file="logout.html"/>
 
 </data>
 XML;
