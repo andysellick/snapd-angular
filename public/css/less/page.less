@@ -18,14 +18,44 @@
         z-index:100;
         top:0;
         right:0;
-        .logout {
-            display:none;
+        .loginicon {
+            padding:0.5em;
+            cursor:pointer;
+            font-size:200%;
+            &:hover {
+            }
         }
-        &.loggedin {
-            .login {
+        .loginform {
+            position:fixed;
+            top:20%;
+            left:30%;
+            width:40%;
+            padding:2em;
+            .border-box;
+            background:#FFFFFF;
+
+            &.visible0 {
                 display:none;
             }
-            .logout {
+            &.visible1 {
+                display:block;
+            }
+        }
+        /* not logged in */
+        &.status0 {
+            .loginicon.loggedout {
+                display:block;
+            }
+            .loginicon.loggedin {
+                display:none;
+            }
+        }
+        /* logged in */
+        &.status1 {
+            .loginicon.loggedout {
+                display:none;
+            }
+            .loginicon.loggedin {
                 display:block;
             }
         }

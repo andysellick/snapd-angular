@@ -8,7 +8,9 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
     $scope.albumpicheight = 0;
     $scope.promise;
     $scope.loading;
-    $scope.loggedin = '';
+    $scope.loginstatus = 0;
+    $scope.showloginform = 0;
+    $scope.loginmsg = '';
 
     //aspects of the url, used for ajax requests and url manipulation
     //FIXME might not need all of these eventually
@@ -65,7 +67,8 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
             var rp = $http.get($scope.url_fullpath + "/home-data");
             $scope.loading = 'on';
             rp.success(function(data, status, headers, config) {
-                $scope.albums = data;
+                $scope.loginstatus = data['loginstatus'];
+                $scope.albums = data['albums'];
                 $scope.currentview = 'home';
                 $scope.updatePageURL($scope.url_sitepath);
                 $scope.loading = '';
@@ -315,6 +318,10 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
         //FIXME this is getting close but needs to refit the map to bounds on resize
     }
     
+    $scope.showLogin = function(showhide){
+        $scope.showloginform = showhide;
+    }
+
     $scope.login = function(){
         var username = document.getElementById('username').value;
         var password = document.getElementById('password').value;
@@ -327,16 +334,19 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
             var rp = $http.post($scope.url_fullpath + "/login",postdata);
             $scope.loading = 'on';
             rp.success(function(data, status, headers, config) {
-                if(data.length){
-                    $scope.loggedin = 'loggedin';
-                    $scope.albums = data;
+                if(data['loginstatus'] == '1'){
+                    $scope.loginmsg = 'Logged in';
+                    $scope.loginstatus = data['loginstatus'];
+                    $scope.albums = data['albums'];
                     $scope.currentview = 'home';
                     $scope.updatePageURL($scope.url_sitepath);
                     $scope.loading = '';
+                    $scope.showloginform = 0;
                     $timeout($scope.doMasonry,0);
                     //console.log(data);
                 }
                 else {
+                    $scope.loginmsg = 'Incorrect username or password';
                     $scope.loading = '';
                 }
             });
@@ -350,8 +360,8 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
         var rp = $http.get($scope.url_fullpath + "/logout");
         $scope.loading = 'on';
         rp.success(function(data, status, headers, config) {
-            $scope.loggedin = '';
-            $scope.albums = data;
+            $scope.loginstatus = data['loginstatus'];
+            $scope.albums = data['albums'];
             $scope.currentview = 'home';
             $scope.updatePageURL($scope.url_sitepath);
             $scope.loading = '';

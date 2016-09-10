@@ -4,15 +4,16 @@
 
     <div class="jsshow">
         <div ng-show="currentview == 'home'">
-            <div class="authenticate {{ loggedin }}">
-                <div class="login">
+            <div class="authenticate status{{ loginstatus }}">
+                <span class="loginicon loggedout" ng-click="showLogin(1)" title="Log in"><i class="icon-lock"></i></span>
+                <div class="loginform visible{{ showloginform }}">
                     <input type="text" id="username" placeholder="Username"/>
                     <input type="password" id="password" placeholder="Password"/>
-                    <button type="submit" ng-click="login()"><i class="icon-unlock"></i></button>
+                    <button type="submit" ng-click="login()">Login</button>
+                    <span class="" ng-click="showLogin(0)">Cancel</span>
+                    <span class="loginstatus">{{ loginmsg }}</span>
                 </div>
-                <div class="logout">
-                    <button type="submit" ng-click="logout()"><i class="icon-lock"></i></button>
-                </div>
+                <span class="loginicon loggedin" ng-click="logout()" title="Log out"><i class="icon-unlock"></i></span>
             </div>
             <div class="grid page">
               <div ng-repeat="item in albums" class="col albumitem">
