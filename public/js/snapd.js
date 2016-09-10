@@ -317,9 +317,15 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
         },500); //FIXME do all the other settimeouts need to use $timeout??
         //FIXME this is getting close but needs to refit the map to bounds on resize
     }
-    
+
     $scope.showLogin = function(showhide){
         $scope.showloginform = showhide;
+        $scope.loginmsg = '';
+        if(showhide == 1){
+            $timeout(function(){
+                document.getElementById('username').focus();
+            },0);
+        }
     }
 
     $scope.login = function(){
@@ -335,15 +341,13 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
             $scope.loading = 'on';
             rp.success(function(data, status, headers, config) {
                 if(data['loginstatus'] == '1'){
-                    $scope.loginmsg = 'Logged in';
                     $scope.loginstatus = data['loginstatus'];
                     $scope.albums = data['albums'];
                     $scope.currentview = 'home';
                     $scope.updatePageURL($scope.url_sitepath);
                     $scope.loading = '';
-                    $scope.showloginform = 0;
+                    $scope.showLogin(0);
                     $timeout($scope.doMasonry,0);
-                    //console.log(data);
                 }
                 else {
                     $scope.loginmsg = 'Incorrect username or password';
@@ -354,6 +358,8 @@ angular.module('snapd',['ngTouch']).controller('snapdc',function($scope,$http,$w
                 alert("AJAX failed!");
             });
         }
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
     }
 
     $scope.logout = function(){

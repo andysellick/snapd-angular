@@ -173,3 +173,72 @@
     	filter: grayscale(@value);
     }
 
+.flex() {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+	}
+	
+	.flex-direction(@direction) {
+		-moz-box-direction: @direction;
+		-webkit-box-direction: @direction;
+		-webkit-flex-direction: @direction;
+		-ms-flexbox-direction: @direction;
+		-ms-flex-direction: @direction;
+		flex-direction: @direction;
+	}
+
+	.justify-content(@position) {
+	    -webkit-box-pack: @position;
+	    -webkit-justify-content: @position;
+	    justify-content: @position;
+	}
+
+	.flex-wrap() {
+	    -moz-box-wrap: wrap;
+	    -webkit-box-wrap: wrap;
+	    -webkit-flex-wrap: wrap;
+	    -ms-flexbox-wrap: wrap;
+	    -ms-flex-wrap: wrap;
+	    flex-wrap: wrap;
+	}
+
+	.flex-nowrap(){
+		-ms-flex-align: center;
+		-ms-flex-pack: center;
+		-ms-box-orient:horizontal;
+		-moz-box-wrap: nowrap;
+		-webkit-box-wrap: nowrap;
+		-webkit-flex-wrap: nowrap;
+		-ms-flexbox-wrap: nowrap;
+		-ms-flex-wrap: nowrap;
+		flex-wrap: nowrap;
+	}
+
+	.flex-grow() {
+	  -webkit-flex: 1 0 0;
+	  -ms-flex: 1 0 100%;
+	  flex: 1 0 0;
+	}
+
+	.align-content(@content) {
+		-webkit-box-align-content: @content;
+		-webkit-align-content: @content;
+		-ms-flex-align-content: @content;
+		align-content: @content;
+	}
+
+	.align-items(@items) {
+		-webkit-box-align: @items;
+		-webkit-align-items: @items;
+		-moz-box-align: @items;
+		-ms-flex-align: @items;
+		align-items: @items;
+	}
+
+	.align-self(@self) {
+		display: table-cell;
+		-webkit-align-self: @self; /* Safari 7.0+ */
+		align-self: @self;
+	}	
